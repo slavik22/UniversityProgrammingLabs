@@ -15,7 +15,7 @@ void fileInput(Node*& tr, const char* filename);
 
 Node* rightRotate(Node* a);
 Node* leftRotate(Node* a);
-int updateBalance(Node* N);
+int fixBalance(Node* N);
 
 Node* insertNode(Node* node, int d);
 Node* insertBalance(Node* node);
@@ -48,12 +48,12 @@ void fileInput(Node*& p, const char* filename) {
     int a;
 
     while (fscanf(f, "%d", &a) && a)
-        p = a > 0 ? insertNode(p, a): deleteNode(p, -a);
+        p = a > 0 ? insertNode(p, a) : deleteNode(p, -a);
 
     fclose(f);
 }
 
-int updateBalance(Node* N) {
+int fixBalance(Node* N) {
     if (!N) return 0;
 
     int bal_l = N->left ? N->left->bal : -1;
@@ -61,7 +61,6 @@ int updateBalance(Node* N) {
 
     return  bal_l - bal_r;
 }
-
 Node* rightRotate(Node* a) {
     Node* b = a->left;
     Node* T1 = b->right;
@@ -69,8 +68,8 @@ Node* rightRotate(Node* a) {
     b->right = a;
     a->left = T1;
 
-    a->bal = updateBalance(a);
-    b->bal = updateBalance(b);
+    a->bal = fixBalance(a);
+    b->bal = fixBalance(b);
 
     return b;
 }
@@ -81,8 +80,8 @@ Node* leftRotate(Node* a) {
     b->left = a;
     a->right = T1;
 
-    a->bal = updateBalance(a);
-    b->bal = updateBalance(b);
+    a->bal = fixBalance(a);
+    b->bal = fixBalance(b);
 
     return b;
 }
@@ -99,49 +98,10 @@ Node* insertNode(Node* node, int d) {
 
     return insertBalance(node);
 }
-
-//bool insertNode(Node* &node, int d) {
-//    if (!node) {
-//        node = new Node(d);
-//        return 1;
-//    }
-//    if (d > node->d)
-//        return insertNode(node->right, d) ? rbalance(node) : 0;
-//    else if (d < node->d)
-//        return insertNode(node->left, d) ? lbalance(node) : 0;
-//    else return 0;
-//
-//}
-//bool lbalance(Node*& p) {
-//    switch (p->bal)
-//    {
-//    case -1: p->bal = 0; return 0;
-//    case 0: p->bal = 1; return 1;
-//    case 1: 
-//        if (p->left->bal == 1) rightRotate(p);
-//        else if (p->left->bal == -1) dbright(p);
-//        return 0;
-//    }
-//}
-//
-//bool rbalance(Node*& p) {
-//    switch (p->bal)
-//    {
-//    case 1: p->bal = 0; return 0;
-//    case 0: p->bal = -1; return 1;
-//    case -1:
-//        if (p->right->bal == -1) leftRotate(p);
-//        else if (p->right->bal == 1) dbleft(p);
-//        return 0;
-//    }
-//}
-
-
-
 Node* insertBalance(Node* node) {
-    node->bal = updateBalance(node);
+    node->bal = fixBalance(node);
 
-    if (node->bal == 2 && node->left->bal > 0) 
+    if (node->bal == 2 && node->left->bal > 0)
         return rightRotate(node);
 
     if (node->bal == -2 && node->right->bal < 0)
@@ -172,7 +132,6 @@ Node* deleteMaxValueNode(Node* p, Node* t) {
 
     return p;
 }
-
 Node* deleteNode(Node* root, int d) {
     if (root == NULL) return root;
     if (d < root->d) root->left = deleteNode(root->left, d);
@@ -185,9 +144,8 @@ Node* deleteNode(Node* root, int d) {
 
     return root ? balanceDelete(root) : root;
 }
-
 Node* balanceDelete(Node* root) {
-    root->bal = updateBalance(root);
+    root->bal = fixBalance(root);
 
     if (root->bal == 2 && root->left->bal >= 0)
         return rightRotate(root);
