@@ -1,0 +1,3 @@
+D:/1) EDUCATION/university/2course/oop/labs/UniversityProgrammingLabs/Sem-3/lab1/cmake-build-debug/CMakeFiles/lab1.dir
+D:/1) EDUCATION/university/2course/oop/labs/UniversityProgrammingLabs/Sem-3/lab1/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/1) EDUCATION/university/2course/oop/labs/UniversityProgrammingLabs/Sem-3/lab1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

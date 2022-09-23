@@ -1,0 +1,7 @@
+# ninja log v5
+1	256	6856533760156642	build.ninja	5d64dfbc0469b24c
+21	1626	6854755220813158	CMakeFiles/lab1.dir/DateTime.cpp.obj	e130187d5d64329d
+3391	5112	6854755255625949	lab1.exe	182c1124c6dc8649
+8	441	6854735462201522	CMakeFiles/lab1.dir/list.cpp.obj	637c74eed8aed83c
+0	858	6854735466368035	CMakeFiles/lab1.dir/Graph.cpp.obj	a8e114ddfae56d28
+16	3391	6854755238394782	CMakeFiles/lab1.dir/main.cpp.obj	c1bf15ccf4e0a51c
