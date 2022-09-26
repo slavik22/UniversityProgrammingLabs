@@ -73,12 +73,6 @@ build CMakeFiles/lab1.dir/DateTime.cpp.obj: CXX_COMPILER__lab1_Debug D$:/1)$ EDU
   OBJECT_DIR = CMakeFiles\lab1.dir
   OBJECT_FILE_DIR = CMakeFiles\lab1.dir
 
-build CMakeFiles/lab1.dir/Shapes.cpp.obj: CXX_COMPILER__lab1_Debug D$:/1)$ EDUCATION/university/2course/oop/labs/UniversityProgrammingLabs/Sem-3/lab1/Shapes.cpp || cmake_object_order_depends_target_lab1
-  DEP_FILE = CMakeFiles\lab1.dir\Shapes.cpp.obj.d
-  FLAGS = -g -std=gnu++14
-  OBJECT_DIR = CMakeFiles\lab1.dir
-  OBJECT_FILE_DIR = CMakeFiles\lab1.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target lab1
@@ -87,7 +81,7 @@ build CMakeFiles/lab1.dir/Shapes.cpp.obj: CXX_COMPILER__lab1_Debug D$:/1)$ EDUCA
 #############################################
 # Link the executable lab1.exe
 
-build lab1.exe: CXX_EXECUTABLE_LINKER__lab1_Debug CMakeFiles/lab1.dir/main.cpp.obj CMakeFiles/lab1.dir/Graph.cpp.obj CMakeFiles/lab1.dir/list.cpp.obj CMakeFiles/lab1.dir/DateTime.cpp.obj CMakeFiles/lab1.dir/Shapes.cpp.obj
+build lab1.exe: CXX_EXECUTABLE_LINKER__lab1_Debug CMakeFiles/lab1.dir/main.cpp.obj CMakeFiles/lab1.dir/Graph.cpp.obj CMakeFiles/lab1.dir/list.cpp.obj CMakeFiles/lab1.dir/DateTime.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\lab1.dir
