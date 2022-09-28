@@ -29,13 +29,26 @@ private:
 
     vector<Vertex<T>> array;
 
-
+    void DFS(int v, vector<bool> &visited);
 public:
+    void addVertex(T data);
+    void addEdge(int u, int v, T data);
 
-    void addVertex(T data){
+    void removeVertex(int u);
+    void removeEdge(int u, int v);
+
+    void print();
+    bool isConnected();
+    int minEdgeBFS(int u,int v);
+};
+
+template<class T>
+void Graph<T>::addVertex(T data) {
         array.emplace_back(data);
-    }
-    void addEdge(int u, int v, T data) {
+}
+
+template<class T>
+void Graph<T>::addEdge(int u, int v, T data) {
         if(u >= array.size() || v >= array.size())
         {
             cout << "One of vertexes of edge is not in graph";
@@ -44,9 +57,10 @@ public:
 
         array[u].edges.push_back(v,data);
         array[v].edges.push_back(u,data);
-    }
+}
 
-    void removeVertex(int u) {
+template<class T>
+void Graph<T>::removeVertex(int u) {
         if(u >= array.size()){
             cout << "Vertex is out of range";
             return;
@@ -65,86 +79,90 @@ public:
             }
 
         }
-    }
-    void removeEdge(int u, int v) {
-        if(u >= array.size() || v >= array.size()){
-            cout << "Vertex is out of range";
-            return;
-        }
+}
 
-        int u_index = array[u].edges.getIndex(v);
-        int v_index = array[v].edges.getIndex(u);
-
-        if(v_index == -1 || u_index == 1) {
-            cout << "No edge in graph";
-            return;
-        };
-
-        array[u].edges.removeAt(u_index);
-        array[v].edges.removeAt(v_index);
+template<class T>
+void Graph<T>::removeEdge(int u, int v) {
+    if(u >= array.size() || v >= array.size()){
+        cout << "Vertex is out of range";
+        return;
     }
 
-    void print() {
-        for(int i = 0; i < array.size(); i++){
-            cout<<"Vertex #" << i<< endl;
-            array[i].print();
-        }
-        cout<<endl;
+    int u_index = array[u].edges.getIndex(v);
+    int v_index = array[v].edges.getIndex(u);
+
+    if(v_index == -1 || u_index == 1) {
+        cout << "No edge in graph";
+        return;
+    };
+
+    array[u].edges.removeAt(u_index);
+    array[v].edges.removeAt(v_index);
+}
+
+template<class T>
+void Graph<T>::print() {
+    for(int i = 0; i < array.size(); i++){
+        cout<<"Vertex #" << i<< endl;
+        array[i].print();
     }
-    bool isConnected() {
-        int n = array.size();
-        for (int i = 0; i < n; i++)
-        {
-            vector<bool> visited(n);
+    cout<<endl;
+}
 
-            DFS(i, visited);
-
-            if (find(visited.begin(), visited.end(), false) != visited.end())
-                return false;
-
-        }
-        return true;
-    }
-    int minEdgeBFS(int u,int v)
+template<class T>
+bool Graph<T>::isConnected() {
+    int n = array.size();
+    for (int i = 0; i < n; i++)
     {
-        int n = array.size();
-        vector<bool> visited(n, 0);
-        vector<int> distance(n, 0);
+        vector<bool> visited(n);
 
-        queue <int> Q;
-        distance[u] = 0;
+        DFS(i, visited);
 
-        Q.push(u);
-        visited[u] = true;
-        while (!Q.empty())
-        {
-            int x = Q.front();
-            Q.pop();
-
-            for (int i=0; i < array[x].edges.GetSize(); i++)
-            {
-                int t = array[x].edges.getVertex(i);
-
-                if (visited[t]) continue;
-
-                distance[t] = distance[x] + 1;
-                Q.push(t );
-                visited[t] = 1;
-            }
-        }
-        return distance[v];
-    }
-
-    void DFS(int v, vector<bool> &visited) {
-        visited[v] = true;
-
-        for (int i = 0; i < array[v].edges.GetSize(); i++ )
-        {
-            int u = array[v].edges.getVertex(i);
-            if (!visited[u]) DFS(u, visited);
-        }
+        if (find(visited.begin(), visited.end(), false) != visited.end())
+            return false;
 
     }
+    return true;
+}
 
-};
+template<class T>
+int Graph<T>::minEdgeBFS(int u, int v) {
+    int n = array.size();
+    vector<bool> visited(n, 0);
+    vector<int> distance(n, 0);
+
+    queue <int> Q;
+    distance[u] = 0;
+
+    Q.push(u);
+    visited[u] = true;
+    while (!Q.empty())
+    {
+        int x = Q.front();
+        Q.pop();
+
+        for (int i=0; i < array[x].edges.GetSize(); i++)
+        {
+            int t = array[x].edges.getVertex(i);
+
+            if (visited[t]) continue;
+
+            distance[t] = distance[x] + 1;
+            Q.push(t );
+            visited[t] = 1;
+        }
+    }
+    return distance[v];
+}
+
+template<class T>
+void Graph<T>::DFS(int v, vector<bool> &visited) {
+    visited[v] = true;
+
+    for (int i = 0; i < array[v].edges.GetSize(); i++ )
+    {
+        int u = array[v].edges.getVertex(i);
+        if (!visited[u]) DFS(u, visited);
+    }
+}
 

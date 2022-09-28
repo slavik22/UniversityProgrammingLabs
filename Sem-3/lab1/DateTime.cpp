@@ -58,12 +58,6 @@ private:
         return data;
     }
 
-    string GetMonth(){
-        vector<int> data = GetAllData();;
-        int monthNumber = data[1];
-        return months[monthNumber - 1];
-    }
-
 public:
     DateTime(long long int secs){
         this->seconds = secs;
