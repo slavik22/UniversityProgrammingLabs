@@ -7,26 +7,34 @@ public:
     List();
     ~List();
 
-    void push_back(T data);
+    void push_back(int other_vertex, T data);
     void pop_front();
     void clear();
     int GetSize(){return Size;}
 
     void print();
 
-    int getIndex(T data);
+    int getIndex(int vertex);
+
+    int getVertex(int index);
+    void changeVertex(int index);
+
     void removeAt(int index);
 
     T operator[](const int index);
+
 private:
 
     template<typename T1>
     class Node{
     public:
         Node* next;
+
+        int vertex;
         T1 data;
 
-        Node(T1 data = T1(), Node* next = nullptr){
+        Node(int vertex, T1 data, Node* next = nullptr){
+            this->vertex = vertex;
             this->data = data;
             this->next = next;
         }
@@ -43,10 +51,9 @@ List<T>::List() {
 }
 
 template<typename T>
-void List<T>::push_back(T data) {
-    if(head == nullptr) {
-        head = new Node<T>(data);
-    }
+void List<T>::push_back(int other_vertex, T data) {
+    if(head == nullptr)
+        head = new Node<T>(other_vertex, data);
     else
     {
         Node<T> *current = this->head;
@@ -54,7 +61,7 @@ void List<T>::push_back(T data) {
         while (current->next != nullptr)
             current = current->next;
 
-        current->next = new Node<T>(data);
+        current->next = new Node<T>(other_vertex,data);
     }
     Size++;
 }
@@ -70,26 +77,30 @@ T List<T>::operator[](const int index) {
                 current = current->next;
                 counter++;
             }
-            return -1;
+
+            return T();
 }
 
 template<typename T>
 void List<T>::pop_front() {
+    if(head == nullptr) return;
+
     Node<T> *temp = head;
     head = head->next;
-
     delete temp;
     Size--;
 }
 
 template<typename T>
-int List<T>::getIndex(T data) {
+int List<T>::getIndex(int vertex) {
     if(head == nullptr) return -1;
 
     Node<T> *current = head;
+    int counter = 0;
 
-    for (int counter = 0; counter < GetSize(); counter++, current = current->next) {
-        if(current->data == data) return counter;
+    while (current != nullptr){
+        if(current->vertex == vertex) return counter;
+        counter++;
     }
 
     return -1;
@@ -132,9 +143,41 @@ void List<T>::print() {
     Node<T> *current = this->head;
 
     while (current != nullptr){
-        cout << current->data << ", ";
+        cout << "Edge:" <<  current->vertex << ", ";
+        cout << "Data:" <<  current->data << ", ";
         current = current->next;
     }
         cout << endl;
 
+}
+
+template<typename T>
+int List<T>::getVertex(int index) {
+    int counter = 0;
+    Node<T> **current = &head;
+
+    while (*current != nullptr)
+    {
+        if(counter == index) return (*current)->vertex;
+        *current = (*current)->next;
+        counter++;
+    }
+
+    return -1;
+}
+
+template<typename T>
+void List<T>::changeVertex(int index) {
+    int counter = 0;
+    Node<T> *current = head;
+
+    while (current != nullptr)
+    {
+        if(counter == index) {
+            current->vertex--;
+            return;
+        }
+        current = current->next;
+        counter++;
+    }
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "DateTime.cpp"
 #include "Graph.cpp"
 
@@ -14,20 +15,24 @@ void DateTimeTest(){
 }
 
 void graphTest(){
-    Graph g(4);
+    Graph<char> gr;
 
-    g.addEdge(0,1);
-    g.addEdge(2,3);
+    gr.addVertex('a');
+    gr.addVertex('b');
+    gr.addVertex('c');
+    gr.addVertex('d');
 
-    g.print();
+    gr.addEdge(0,3,'1');
+    gr.addEdge(1,2,'1');
+    gr.addEdge(2,3,'3');
 
-    cout  << "Is connected: " << g.isConnected() << endl;
 
-    g.addEdge(1,2);
+    cout << gr.minEdgeBFS(0,3);
 
-    cout << "Min path: " << g.minEdgeBFS(0,3);
+    gr.print();
 }
 
 int main() {
     DateTimeTest();
+    graphTest();
 }
