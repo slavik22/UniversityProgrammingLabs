@@ -44,11 +44,6 @@ void Server::slotReadyRead(){
             SendToClient(str);
             break;
         }
-
-//        QString str;
-//        in >> str;
-//        qDebug() << str;
-//        SendToClient(str);
     }
     else{
         qDebug() << "DataStream error";

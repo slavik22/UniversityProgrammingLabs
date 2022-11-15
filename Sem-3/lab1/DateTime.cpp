@@ -18,7 +18,7 @@ private:
     string weekday[7] = {"Saturday","Sunday","Monday","Tuesday", "Wednesday","Thursday","Friday"};
     string months[12] = {"January","February","March ","April", "May","June","July","August","September","October", "November", "December"};
 
-    long long int seconds; // from 1970
+    long long int seconds; // from START_YEAR
 
     long long int toSeconds(int years, int months, int days, int hours, int minutes, int secs){
         int seconds_in_months = 0;

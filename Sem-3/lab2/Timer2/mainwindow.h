@@ -16,7 +16,6 @@
 #include <QMessageBox>
 #include <QTextEdit>
 #include <QTimeEdit>
-//#include <QSound>
 #include <QCheckBox>
 
 
@@ -33,19 +32,24 @@ private:
     void setToolBar();
     QLabel *timelbl;
 //Main window widgets
+    QLabel *doNotLbl;
+    QCheckBox *doNotCheckBox;
+
     QLabel *mainTimerLbl;
     QListWidget *listW;
     QList<Timer> timers;
 
     bool stopped = false;
+    bool doNotDisturb = false;
+
 //Add window
     QWidget *addWindow;
     QLabel *addTimerLbl;
     QLabel *addDescLbl;
     QLabel *addCountLbl;
     QTimeEdit *addTimeEdit;
-    QTextEdit *addTextEdit;
-    QTextEdit *addCountTextEdit;
+    QLineEdit *addTextEdit;
+    QLineEdit *addCountTextEdit;
     void addTimer();
 //Signal Window
    QWidget *signalWindow;
@@ -58,16 +62,12 @@ private:
    QLabel *editTimeLbl;
    QLabel *editDescLbl;
    QTimeEdit *editTimeEdit;
-   QTextEdit *editDescEdit;
+   QLineEdit *editDescEdit;
    QPushButton *editTimerBtn;
    void toEditWindow();
 //Info Window
-   QWidget *settingsWindow;
-   QLabel *doNotLbl;
-   QCheckBox *doNotCheckBox;
-   QPushButton *infoOKBtn;
-   bool doNotDisturb;
-
+//   QWidget *settingsWindow;
+//   QPushButton *infoOKBtn;
 
 private slots:
     void addTimerBtnClicked();
@@ -75,8 +75,9 @@ private slots:
     void editTimerBtnClicked();
     void deleteTimer();
     void deleteAllTimers();
-    void settingsWindowSlot();
-    void infoOKBtnClicked();
+    void doNotDisturbChanged(bool checked);
+//    void settingsWindowSlot();
+//    void infoOKBtnClicked();
 private:
     void timerEvent(QTimerEvent *e);
     void timersSort();

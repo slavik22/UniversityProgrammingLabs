@@ -3,22 +3,31 @@
 #include <QScrollBar>
 #include <QPushButton>
 #include <QLineEdit>
-#include <QtMultimedia/QMediaPlayer>
+#include <QSoundEffect>
+
 MainWindow::MainWindow()
 {
-    doNotLbl = new QLabel("Do not disturbe mode");
-    doNotCheckBox = new QCheckBox();
-    doNotCheckBox->setChecked(false);
-    doNotDisturb = false;
+    this->setWindowIcon(QIcon(":/resources/icon2.png"));
+    this->setFixedSize(QSize(550, 300));
 
     temp.setHMS(0,0,0);
     setToolBar();
 
-    QLabel *tmr = new QLabel("Nearest Timer",this);
-    tmr->setGeometry(50,85,100,20);
     mainTimerLbl = new QLabel(this);
     mainTimerLbl->setText("00:00:00");
     mainTimerLbl->setGeometry(40,100,130,40);
+
+
+    QLabel *doNotLb = new QLabel("Do not disturb:",this);
+    doNotLb->setGeometry(40,160,120,20);
+
+    doNotCheckBox = new QCheckBox(this);
+    doNotCheckBox->setChecked(false);
+    doNotCheckBox->setGeometry(140,160,20,20);
+
+    connect(doNotCheckBox, SIGNAL(clicked(bool)), this, SLOT(doNotDisturbChanged(bool)));
+    doNotDisturb = false;
+
 
     QFont font = mainTimerLbl->font();
     font.setPixelSize(32);
@@ -34,6 +43,10 @@ MainWindow::MainWindow()
     listW->setGeometry(300,80,200,200);
 }
 
+void MainWindow::doNotDisturbChanged(bool checked){
+    doNotDisturb = checked;
+}
+
 void MainWindow::timerEvent(QTimerEvent *e)
 {
     Q_UNUSED(e);
@@ -45,9 +58,7 @@ void MainWindow::timerEvent(QTimerEvent *e)
     for(int i = 0; i < timers.size(); i++){
             timers[i].setTime(timers[i].getTime().addMSecs(-1000));
             listW->item(i)->setText(timers[i].getTime().toString() + " | " + timers[i].getDesc());
-        }
 
-     for(int i = 0; i < timers.size(); i++){
             if(timers[i].getTime() == temp){
                 timeoutWindow();
                 timers.removeAt(i);
@@ -66,19 +77,12 @@ void MainWindow::setToolBar()
 {
     toolbar = addToolBar("Main Toolbar");
 
-    toolbar->addSeparator();
-    QAction *add = toolbar->addAction("New Timer");
+    QAction *add = toolbar->addAction("Add Timer");
     QAction *stop = toolbar->addAction("Stop timers");
     QAction *edit = toolbar->addAction("Edit Timer");
-    QAction *dlete = toolbar->addAction("Delete Timer");
-    QAction *dleteAll = toolbar->addAction("Delete All Timers");
-    QAction *info = toolbar->addAction("Timer's Info");
+    QAction *dlete = toolbar->addAction("Remove Timer");
+    QAction *dleteAll = toolbar->addAction("Remove All Timers");
     toolbar->setMovable(false);
-    toolbar->addSeparator();
-
-    QLabel *lbl = new QLabel("Current time: ");
-
-    toolbar->addWidget(lbl);
 
     timelbl = new QLabel(QTime::currentTime().toString());
     startTimer(1000);
@@ -89,12 +93,12 @@ void MainWindow::setToolBar()
     connect(edit, &QAction::triggered, this, &MainWindow::toEditWindow);
     connect(dlete, &QAction::triggered, this, &MainWindow::deleteTimer);
     connect(dleteAll, &QAction::triggered, this, &MainWindow::deleteAllTimers);
-    connect(info, &QAction::triggered, this, &MainWindow::settingsWindowSlot);
 }
 
 void MainWindow::addTimer()
 {
     addWindow = new QWidget();
+    addWindow->setWindowIcon(QIcon(":/resources/icon2.png"));
     addWindow->resize(250,200);
     addWindow->setWindowTitle("Add Timer");
 
@@ -103,16 +107,19 @@ void MainWindow::addTimer()
 
     addTimeEdit = new QTimeEdit();
     addTimeEdit->setDisplayFormat("hh:mm:ss");
+    addTimeEdit->setMinimumTime(QTime(0,0,1));
     addTimeEdit->setGeometry(90,65,100,25);
 
     addDescLbl = new QLabel("Description");
     addDescLbl->setGeometry(20, 100, 50, 20);
 
-    addTextEdit = new QTextEdit();
+    addTextEdit = new QLineEdit();
     addTextEdit->setGeometry(90,130,100,150);
 
     addCountLbl = new QLabel("Count of timers");
-    addCountTextEdit = new QTextEdit();
+    addCountTextEdit = new QLineEdit();
+
+    addCountTextEdit->setValidator(new QIntValidator(1,1,this));
 
     QPushButton *addBtn = new QPushButton("Set Timer",addWindow);
 
@@ -133,39 +140,57 @@ void MainWindow::timeoutWindow()
 {
     QVBoxLayout *vbox = new QVBoxLayout();
 
-    QMediaPlayer* player = new QMediaPlayer();
-    player->setSource(QUrl::fromLocalFile(":/resources/resources/AlarmClock.wav"));
-    player->play();
-
     signalWindow = new QWidget();
+    signalWindow->setWindowIcon(QIcon(":/resources/icon2.png"));
+
     signalWindow->resize(250,200);
     signalWindow->setObjectName("TIMEOUT!");
-    timeoutLbl = new QLabel("Timeout! There is description:");
-    timeoutDescLbl = new QTextEdit(this);
-    timeoutDescLbl->setText(timers[0].getDesc());
-    timeoutDescLbl->setReadOnly(true);
+    timeoutLbl = new QLabel("Timeout!");
+
+    QString description = timers[0].getDesc();
+    description = description.isEmpty() ? "No description..." : description;
+    QLabel *timeoutDescprPLbl = new QLabel("Description: " +  description);
+
+    QFont font = timeoutDescprPLbl->font();
+    font.setPixelSize(20);
+    timeoutLbl->setFont(font);
+
     timeoutOKBtn = new QPushButton("OK", this);
 
     vbox->addWidget(timeoutLbl);
-    vbox->addWidget(timeoutDescLbl);
+    vbox->addWidget(timeoutDescprPLbl);
     vbox->addWidget(timeoutOKBtn);
 
     connect(timeoutOKBtn, &QPushButton::clicked, signalWindow, &QPushButton::close);
 
     signalWindow->show();
     signalWindow->setLayout(vbox);
+
+    if(!doNotDisturb){
+        QSoundEffect* player = new QSoundEffect();
+        player->setSource(QUrl::fromLocalFile(":/resources/AlarmClock.wav"));
+        player->play();
+    }
 }
 
 void MainWindow::toEditWindow()
 {
 
     if(timers.empty()){
-        QMessageBox::warning(this,tr("Timers is empty"),tr("Timers is empty"));
+        QMessageBox::warning(this,tr("Timers are empty"),tr("Timers are empty"));
         return;
-        }
+    }
+
+    int positionToRemove = listW->currentRow();
+
+    if(positionToRemove < 0){
+        QMessageBox::warning(this, tr("ERROR"), tr("Timer is not selected"));
+        return;
+    }
 
     editWindow = new QWidget();
-    editWindow->resize(200,250);
+    editWindow->setWindowIcon(QIcon(":/resources/icon2.png"));
+    editWindow->resize(250,150);
     editWindow->setObjectName("Edit Timer");
 
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -173,8 +198,9 @@ void MainWindow::toEditWindow()
     editTimeLbl = new QLabel("Edit time:");
     editDescLbl = new QLabel("Edit description:");
     editTimeEdit = new QTimeEdit();
+    editTimeEdit->setMinimumTime(QTime(0,0,1));
     editTimeEdit->setDisplayFormat("hh:mm:ss");
-    editDescEdit = new QTextEdit();
+    editDescEdit = new QLineEdit();
     editTimerBtn = new QPushButton("OK");
 
     vbox->addWidget(editTimeLbl);
@@ -192,8 +218,8 @@ void MainWindow::toEditWindow()
 void MainWindow::addTimerBtnClicked()
 {
     QTime time(addTimeEdit->time().hour(),addTimeEdit->time().minute(),addTimeEdit->time().second());
-    Timer timer(time,addTextEdit->toPlainText());
-    for(int i = 0; i < addCountTextEdit->toPlainText().toInt(); i++){
+    Timer timer(time,addTextEdit->text());
+    for(int i = 0; i < addCountTextEdit->text().toInt(); i++){
         timers.append(timer);
     }
     addWindow->close();
@@ -209,7 +235,12 @@ void MainWindow::addTimerBtnClicked()
 
 void MainWindow::stopTimer()
 {
+   if(timers.empty()){
+        QMessageBox::warning(this,tr("Timers are empty"),tr("Timers are empty"));
+        return;
+    }
    stopped = !stopped;
+
 }
 
 void MainWindow::editTimerBtnClicked()
@@ -220,7 +251,7 @@ void MainWindow::editTimerBtnClicked()
     Timer *t = &timers[positionToEditt];
 
     t->setTime(time);
-    t->setDesc(editDescEdit->toPlainText());
+    t->setDesc(editDescEdit->text());
 
     listW->item(positionToEditt)->setText(t->getTime().toString() + " | " + t->getDesc());
 
@@ -231,12 +262,17 @@ void MainWindow::editTimerBtnClicked()
 void MainWindow::deleteTimer()
 {
     if(timers.empty()){
-        QMessageBox::warning(this,tr("Timers is empty"),tr("Timers is empty"));
+        QMessageBox::warning(this,tr("Timers are empty"),tr("Timers are empty"));
         return;
-        }
-
+     }
 
     int positionToRemove = listW->currentRow();
+
+    if(positionToRemove < 0){
+        QMessageBox::warning(this, tr("ERROR"), tr("Timer is not selected"));
+        return;
+    }
+
     timers.removeAt(positionToRemove);
     delete listW->takeItem(positionToRemove);
     if(timers.empty())
@@ -245,36 +281,15 @@ void MainWindow::deleteTimer()
 
 void MainWindow::deleteAllTimers()
 {
+    if(timers.empty()){
+        QMessageBox::warning(this,tr("Timers are empty"),tr("Timers are empty"));
+        return;
+     }
+
+
     timers.clear();
     listW->clear();
     mainTimerLbl->setText("00:00:00");
-}
-
-void MainWindow::settingsWindowSlot()
-{
-    settingsWindow = new QWidget;
-    QVBoxLayout *vbox = new QVBoxLayout();
-    QHBoxLayout *hbox = new QHBoxLayout();
-
-    infoOKBtn = new QPushButton("OK");
-
-    hbox->addWidget(doNotLbl);
-    hbox->addWidget(doNotCheckBox);
-    vbox->addLayout(hbox);
-    vbox->addWidget(infoOKBtn);
-
-    settingsWindow->setLayout(vbox);
-    settingsWindow->setObjectName("Settings");
-    settingsWindow->setFixedSize(250,150);
-    settingsWindow->show();
-
-    connect(infoOKBtn, &QPushButton::clicked, this, &MainWindow::infoOKBtnClicked);
-}
-
-void MainWindow::infoOKBtnClicked()
-{
-    doNotDisturb = doNotCheckBox->isChecked();
-    settingsWindow->close();
 }
 
 void MainWindow::timersSort() {
