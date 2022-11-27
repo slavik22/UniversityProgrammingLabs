@@ -38,10 +38,11 @@ void Server::slotReadyRead(){
             }
 
             QString str;
+            QString userName;
             QTime time;
-            in >> time >> str;
+            in >> userName >> time >> str;
             nextBlockSize = 0;
-            SendToClient(str);
+            SendToClient(userName, str);
             break;
         }
     }
@@ -50,11 +51,11 @@ void Server::slotReadyRead(){
     }
 }
 
-void Server::SendToClient(QString str){
+void Server::SendToClient(QString userName,QString str){
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_3);
-    out << quint16(0) << QTime::currentTime() << str;
+    out << quint16(0) << userName << QTime::currentTime() << str;
     out.device()->seek(0);
     out << qint16(Data.size() - sizeof(quint16));
     for(int i = 0; i < Sockets.size(); i++){

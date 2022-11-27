@@ -30,6 +30,8 @@ private:
     QByteArray Data;
     void SendToServer(QString str);
     quint16 nextBlockSize;
+    QString UserName = NULL;
+    bool isConnected = false;
 public slots:
     void slotReadyRead();
 };
