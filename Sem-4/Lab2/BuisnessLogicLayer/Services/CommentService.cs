@@ -14,9 +14,11 @@
 using AutoMapper;
 using BuisnessLogicLayer.Interfaces;
 using BuisnessLogicLayer.Models;
+using BuisnessLogicLayer.Services.NotificationObserver;
 using BuisnessLogicLayer.Validation;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
+using System.Net.WebSockets;
 
 namespace BuisnessLogicLayer.Services;
 
@@ -31,6 +33,8 @@ public class CommentService : ICommentService
     /// The unit of work
     /// </summary>
     private readonly IUnitOfWork _unitOfWork;
+
+    private readonly INotificationService _notificationService;
     /// <summary>
     /// The mapper
     /// </summary>
@@ -102,6 +106,14 @@ public class CommentService : ICommentService
     /// <param name="model"></param>
     public void Add(CommentModel model)
     {
+        var post = _unitOfWork.PostRepository.Get(model.PostId);
+
+        var observer = new AuthorNotificationObserver(_notificationService, null);
+
+        var commentSubject = new CommentSubject();
+        commentSubject.Attach(observer);
+        commentSubject.Notify(_mapper.Map<PostModel>(post),model);
+            
          _unitOfWork.CommentRepository.Add(_mapper.Map<Comment>(model));
          _unitOfWork.SaveAsync();
     }
