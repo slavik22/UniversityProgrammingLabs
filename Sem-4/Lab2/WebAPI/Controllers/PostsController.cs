@@ -14,6 +14,7 @@
 using BuisnessLogicLayer.Interfaces;
 using BuisnessLogicLayer.Models;
 using BuisnessLogicLayer.Models.Enums;
+using BuisnessLogicLayer.Services;
 using BuisnessLogicLayer.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace WebApi.Controllers
         /// <summary>
         /// The tag service
         /// </summary>
-        private readonly ITagService _tagService;
+        private readonly TagLoggerService _tagService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PostsController" /> class.
@@ -48,7 +49,7 @@ namespace WebApi.Controllers
         /// <param name="postService">The post service.</param>
         /// <param name="userService">The user service.</param>
         /// <param name="tagService">The tag service.</param>
-        public PostsController(IPostService postService,IUserService userService, ITagService tagService)
+        public PostsController(IPostService postService,IUserService userService, TagLoggerService tagService)
         {
             _postService = postService;
             _userService = userService;
