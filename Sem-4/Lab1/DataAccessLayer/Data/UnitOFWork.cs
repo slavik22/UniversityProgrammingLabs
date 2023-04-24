@@ -23,7 +23,7 @@ namespace DataAccessLayer.Data;
 /// </summary>
 /// <seealso cref="System.IDisposable" />
 /// <seealso cref="IUnitOfWork" />
-public class UnitOfWork : IDisposable, IUnitOfWork
+public class UnitOfWork: IUnitOfWork
 {
     /// <summary>
     /// The context
@@ -125,32 +125,5 @@ public class UnitOfWork : IDisposable, IUnitOfWork
     public async Task SaveAsync()
     {
         await _context.SaveChangesAsync();
-    }
-
-    /// <summary>
-    /// The disposed
-    /// </summary>
-    private bool _disposed;
-
-    /// <summary>
-    /// Releases unmanaged and - optionally - managed resources.
-    /// </summary>
-    /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-    private void Dispose(bool disposing)
-    {
-        if (!this._disposed || disposing)
-        {
-                _context.Dispose();
-        }
-        this._disposed = true;
-    }
-
-    /// <summary>
-    /// Disposes this instance.
-    /// </summary>
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }
