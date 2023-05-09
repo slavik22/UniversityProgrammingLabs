@@ -1,0 +1,17 @@
+<div id="modal-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Leave a comment</mat-label>
+        <textarea maxlength="250" matInput [(ngModel)]="text"></textarea>
+    </mat-form-field>
+    <button (click)="onSave()" mat-raised-button color="primary">Add</button>
+
+    <div id="comment-list__container">
+        <mat-list *ngFor="let comment of commentList">
+            <span class="comment-grid">
+                <mat-icon>comment</mat-icon>
+                <div class="comment" mat-line>{{comment.text}}</div>
+                <div class="comment-info" mat-line> {{comment.creationUser}} - {{comment.creationTimestamp | date: 'dd-MM-yyyy'}} </div>
+            </span>
+        </mat-list>
+    </div>
+</div>

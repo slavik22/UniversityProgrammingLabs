@@ -1,0 +1,63 @@
+@import "../../../css/partial/colors";
+
+#modal-container {
+    width: 600px;
+    height: 300px;
+}
+
+mat-form-field {
+    height: 50px;
+    width: 500px;
+
+    textarea {
+        resize: none;
+        overflow: auto;
+        height: 50px;
+        width: 500px;
+    }
+}
+
+button {
+    float: right;
+    height: 90px;
+}
+
+#comment-list__container {
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: auto;
+
+    max-height: 500px;
+}
+
+.comment-grid {
+    background-color: $light-grey;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "comment comment"
+        "icon info";
+    height: 100px;
+    max-height: 100px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    overflow: auto;
+
+    mat-icon {
+        grid-area: icon;
+    }
+
+    .comment {
+        grid-area: comment;
+    }
+
+    .comment-info {
+        grid-area: info;
+    }
+}
