@@ -1,10 +1,10 @@
-package com.bozzaccio.twitterclone.service;
+package com.uni.twitter.service;
 
-import com.bozzaccio.twitterclone.security.UserLogged;
-import com.bozzaccio.twitterclone.security.dto.AuthResponse;
-import com.bozzaccio.twitterclone.security.dto.LoginRequest;
-import com.bozzaccio.twitterclone.security.dto.RegisterRequest;
-import com.bozzaccio.twitterclone.security.jwt.JwtUtils;
+
+import com.uni.twitter.security.UserLogged;
+import com.uni.twitter.security.dto.AuthResponse;
+import com.uni.twitter.security.dto.RegisterRequest;
+import com.uni.twitter.security.jwt.JwtUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
 
 @Service
 public class AuthService {
@@ -33,7 +33,7 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public ResponseEntity<?> login(LoginRequest request) {
+    public ResponseEntity<?> login(com.uni.twitter.security.dto.LoginRequest request) {
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -63,7 +63,7 @@ public class AuthService {
                     .body(buildErrorMessage(BASE_JWT_ERROR, EMAIL, ALREADY_IN_USE));
         }
 
-        com.bozzaccio.twitterclone.entity.User user = new com.bozzaccio.twitterclone.entity.User();
+        com.uni.twitter.entity.User user = new com.uni.twitter.entity.User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(encoder.encode(request.getPassword()));

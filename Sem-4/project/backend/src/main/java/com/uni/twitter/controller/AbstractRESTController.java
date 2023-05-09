@@ -1,11 +1,11 @@
-package com.bozzaccio.twitterclone.controller;
+package com.uni.twitter.controller;
 
-import com.bozzaccio.twitterclone.service.IBaseCRUDService;
+import com.uni.twitter.service.IBaseCRUDService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
 
 public class AbstractRESTController<DTO, ID, S extends IBaseCRUDService<DTO, ID>>
         implements IController {

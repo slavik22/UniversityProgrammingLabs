@@ -1,6 +1,7 @@
-package com.bozzaccio.twitterclone.dto;
+package com.uni.twitter.dto;
 
-import com.bozzaccio.twitterclone.entity.BaseEntity;
+
+import com.uni.twitter.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.Date;

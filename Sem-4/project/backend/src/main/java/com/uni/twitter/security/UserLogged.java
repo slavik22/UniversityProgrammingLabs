@@ -1,4 +1,4 @@
-package com.bozzaccio.twitterclone.security;
+package com.uni.twitter.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +24,7 @@ public class UserLogged implements UserDetails {
         this.password = password;
     }
 
-    public static UserLogged build(com.bozzaccio.twitterclone.entity.User user) {
+    public static UserLogged build(com.uni.twitter.entity.User user) {
 
         return new UserLogged(
                 user.getId(),

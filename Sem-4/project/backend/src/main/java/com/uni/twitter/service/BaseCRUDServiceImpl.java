@@ -1,8 +1,8 @@
-package com.bozzaccio.twitterclone.service;
+package com.uni.twitter.service;
 
-import com.bozzaccio.twitterclone.converter.AbstractConverter;
-import com.bozzaccio.twitterclone.dto.AbstractDTO;
-import com.bozzaccio.twitterclone.entity.BaseEntity;
+import com.uni.twitter.converter.AbstractConverter;
+import com.uni.twitter.dto.AbstractDTO;
+import com.uni.twitter.entity.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -10,7 +10,7 @@ import org.springframework.util.Assert;
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
 
 public abstract class BaseCRUDServiceImpl<DTO extends AbstractDTO<ID>, E extends BaseEntity<ID>, ID> {
 

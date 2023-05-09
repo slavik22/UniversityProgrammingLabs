@@ -1,8 +1,9 @@
-package com.bozzaccio.twitterclone.controller;
+package com.uni.twitter.controller;
 
-import com.bozzaccio.twitterclone.security.dto.LoginRequest;
-import com.bozzaccio.twitterclone.security.dto.RegisterRequest;
-import com.bozzaccio.twitterclone.service.AuthService;
+
+import com.uni.twitter.security.dto.LoginRequest;
+import com.uni.twitter.security.dto.RegisterRequest;
+import com.uni.twitter.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

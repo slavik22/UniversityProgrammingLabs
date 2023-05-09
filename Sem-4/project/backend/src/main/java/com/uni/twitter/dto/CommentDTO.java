@@ -1,6 +1,6 @@
-package com.bozzaccio.twitterclone.dto;
+package com.uni.twitter.dto;
 
-import com.bozzaccio.twitterclone.entity.Comment;
+import com.uni.twitter.entity.Comment;
 
 public class CommentDTO extends AbstractDTO<Long> {
 

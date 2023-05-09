@@ -1,7 +1,7 @@
-package com.bozzaccio.twitterclone.controller;
+package com.uni.twitter.controller;
 
-import com.bozzaccio.twitterclone.dto.ReactionDTO;
-import com.bozzaccio.twitterclone.service.ReactionService;
+import com.uni.twitter.dto.ReactionDTO;
+import com.uni.twitter.service.ReactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

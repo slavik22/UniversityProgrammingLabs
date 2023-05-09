@@ -1,8 +1,8 @@
-package com.bozzaccio.twitterclone.dto;
+package com.uni.twitter.dto;
 
-import com.bozzaccio.twitterclone.entity.BaseEntity;
-import com.bozzaccio.twitterclone.entity.Post;
-import com.bozzaccio.twitterclone.util.ReactionEnum;
+import com.uni.twitter.entity.BaseEntity;
+import com.uni.twitter.entity.Post;
+import com.uni.twitter.util.ReactionEnum;
 
 import java.util.HashMap;
 import java.util.Map;

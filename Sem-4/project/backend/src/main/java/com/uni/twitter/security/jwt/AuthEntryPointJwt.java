@@ -1,4 +1,4 @@
-package com.bozzaccio.twitterclone.security.jwt;
+package com.uni.twitter.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;

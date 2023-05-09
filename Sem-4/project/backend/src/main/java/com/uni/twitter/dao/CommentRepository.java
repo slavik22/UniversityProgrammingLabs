@@ -1,6 +1,6 @@
-package com.bozzaccio.twitterclone.dao;
+package com.uni.twitter.dao;
 
-import com.bozzaccio.twitterclone.entity.Comment;
+import com.uni.twitter.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

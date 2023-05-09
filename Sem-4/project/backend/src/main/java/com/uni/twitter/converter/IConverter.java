@@ -1,7 +1,7 @@
-package com.bozzaccio.twitterclone.converter;
+package com.uni.twitter.converter;
 
-import com.bozzaccio.twitterclone.dto.AbstractDTO;
-import com.bozzaccio.twitterclone.entity.BaseEntity;
+import com.uni.twitter.dto.AbstractDTO;
+import com.uni.twitter.entity.BaseEntity;
 
 import java.util.Objects;
 

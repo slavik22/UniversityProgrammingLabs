@@ -1,4 +1,4 @@
-package com.bozzaccio.twitterclone.security;
+package com.uni.twitter.security;
 
 import org.springframework.security.core.AuthenticationException;
 

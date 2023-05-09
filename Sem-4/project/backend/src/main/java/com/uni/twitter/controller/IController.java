@@ -1,6 +1,6 @@
-package com.bozzaccio.twitterclone.controller;
+package com.uni.twitter.controller;
 
-import com.bozzaccio.twitterclone.security.JWTAuthException;
+import com.uni.twitter.security.JWTAuthException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -1,11 +1,11 @@
-package com.bozzaccio.twitterclone.service;
+package com.uni.twitter.service;
 
-import com.bozzaccio.twitterclone.converter.CommentConverter;
-import com.bozzaccio.twitterclone.dao.CommentRepository;
-import com.bozzaccio.twitterclone.dao.PostRepository;
-import com.bozzaccio.twitterclone.dto.CommentDTO;
-import com.bozzaccio.twitterclone.entity.Comment;
-import com.bozzaccio.twitterclone.entity.Post;
+import com.uni.twitter.converter.CommentConverter;
+import com.uni.twitter.dao.CommentRepository;
+import com.uni.twitter.dao.PostRepository;
+import com.uni.twitter.dto.CommentDTO;
+import com.uni.twitter.entity.Comment;
+import com.uni.twitter.entity.Post;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
 
 @Service
 public class CommentService

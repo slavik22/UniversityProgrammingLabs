@@ -1,4 +1,4 @@
-package com.bozzaccio.twitterclone.config;
+package com.uni.twitter.config;
 
 import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Value;

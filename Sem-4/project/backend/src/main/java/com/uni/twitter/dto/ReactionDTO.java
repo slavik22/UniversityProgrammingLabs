@@ -1,7 +1,8 @@
-package com.bozzaccio.twitterclone.dto;
+package com.uni.twitter.dto;
 
-import com.bozzaccio.twitterclone.entity.Reaction;
-import com.bozzaccio.twitterclone.util.ReactionEnum;
+
+import com.uni.twitter.entity.Reaction;
+import com.uni.twitter.util.ReactionEnum;
 
 public class ReactionDTO extends AbstractDTO<Long> {
 

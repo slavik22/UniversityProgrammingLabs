@@ -1,6 +1,7 @@
-package com.bozzaccio.twitterclone.security.jwt;
+package com.uni.twitter.security.jwt;
 
-import com.bozzaccio.twitterclone.service.UserService;
+
+import com.uni.twitter.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

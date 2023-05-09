@@ -1,4 +1,4 @@
-package com.bozzaccio.twitterclone.service;
+package com.uni.twitter.service;
 
 public interface IBaseCRUDService<DTO, ID> {
 

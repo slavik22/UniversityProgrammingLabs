@@ -1,4 +1,4 @@
-package com.bozzaccio.twitterclone.util;
+package com.uni.twitter.util;
 
 public enum ReactionEnum {
 

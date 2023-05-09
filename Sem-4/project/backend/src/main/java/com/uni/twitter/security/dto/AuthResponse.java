@@ -1,4 +1,4 @@
-package com.bozzaccio.twitterclone.security.dto;
+package com.uni.twitter.security.dto;
 
 import java.io.Serializable;
 

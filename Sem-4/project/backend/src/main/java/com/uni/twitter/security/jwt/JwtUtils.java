@@ -1,7 +1,7 @@
-package com.bozzaccio.twitterclone.security.jwt;
+package com.uni.twitter.security.jwt;
 
-import com.bozzaccio.twitterclone.security.JWTAuthException;
-import com.bozzaccio.twitterclone.security.UserLogged;
+import com.uni.twitter.security.JWTAuthException;
+import com.uni.twitter.security.UserLogged;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
 
 @Component
 public class JwtUtils {

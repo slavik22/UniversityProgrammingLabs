@@ -1,8 +1,8 @@
-package com.bozzaccio.twitterclone.service;
+package com.uni.twitter.service;
 
-import com.bozzaccio.twitterclone.dao.UserRepository;
-import com.bozzaccio.twitterclone.entity.User;
-import com.bozzaccio.twitterclone.security.UserLogged;
+import com.uni.twitter.dao.UserRepository;
+import com.uni.twitter.entity.User;
+import com.uni.twitter.security.UserLogged;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,7 +12,8 @@ import org.springframework.util.Assert;
 
 import javax.persistence.EntityNotFoundException;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
+
 
 @Service
 public class UserService implements UserDetailsService {

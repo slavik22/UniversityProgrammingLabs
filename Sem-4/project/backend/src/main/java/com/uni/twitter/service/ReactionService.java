@@ -1,18 +1,19 @@
-package com.bozzaccio.twitterclone.service;
+package com.uni.twitter.service;
 
-import com.bozzaccio.twitterclone.converter.ReactionConverter;
-import com.bozzaccio.twitterclone.dao.PostRepository;
-import com.bozzaccio.twitterclone.dao.ReactionRepository;
-import com.bozzaccio.twitterclone.dto.ReactionDTO;
-import com.bozzaccio.twitterclone.entity.Post;
-import com.bozzaccio.twitterclone.entity.Reaction;
+
+import com.uni.twitter.converter.ReactionConverter;
+import com.uni.twitter.dao.PostRepository;
+import com.uni.twitter.dao.ReactionRepository;
+import com.uni.twitter.dto.ReactionDTO;
+import com.uni.twitter.entity.Post;
+import com.uni.twitter.entity.Reaction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
 
 @Service
 public class ReactionService

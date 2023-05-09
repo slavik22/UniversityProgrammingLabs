@@ -1,9 +1,11 @@
-package com.bozzaccio.twitterclone.config;
+package com.uni.twitter.config;
 
-import com.bozzaccio.twitterclone.security.jwt.AuthEntryPointJwt;
-import com.bozzaccio.twitterclone.security.jwt.AuthFilter;
-import com.bozzaccio.twitterclone.security.jwt.JwtUtils;
-import com.bozzaccio.twitterclone.service.UserService;
+
+import com.uni.twitter.security.jwt.AuthEntryPointJwt;
+import com.uni.twitter.security.jwt.AuthFilter;
+import com.uni.twitter.security.jwt.JwtUtils;
+
+import com.uni.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

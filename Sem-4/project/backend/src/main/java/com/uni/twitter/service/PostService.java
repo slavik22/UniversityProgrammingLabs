@@ -1,9 +1,10 @@
-package com.bozzaccio.twitterclone.service;
+package com.uni.twitter.service;
 
-import com.bozzaccio.twitterclone.converter.PostConverter;
-import com.bozzaccio.twitterclone.dao.PostRepository;
-import com.bozzaccio.twitterclone.dto.PostDTO;
-import com.bozzaccio.twitterclone.entity.Post;
+
+import com.uni.twitter.converter.PostConverter;
+import com.uni.twitter.dao.PostRepository;
+import com.uni.twitter.dto.PostDTO;
+import com.uni.twitter.entity.Post;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

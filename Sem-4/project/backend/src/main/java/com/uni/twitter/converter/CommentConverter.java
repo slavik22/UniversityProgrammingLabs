@@ -1,11 +1,11 @@
-package com.bozzaccio.twitterclone.converter;
+package com.uni.twitter.converter;
 
-import com.bozzaccio.twitterclone.dto.CommentDTO;
-import com.bozzaccio.twitterclone.entity.Comment;
+import com.uni.twitter.dto.CommentDTO;
+import com.uni.twitter.entity.Comment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import static com.bozzaccio.twitterclone.util.ErrorUtils.*;
+import static com.uni.twitter.util.ErrorUtils.*;
 
 @Component
 public class CommentConverter extends AbstractConverter<CommentDTO, Comment> implements IConverter<Long> {

@@ -1,6 +1,6 @@
-package com.bozzaccio.twitterclone.dao;
+package com.uni.twitter.dao;
 
-import com.bozzaccio.twitterclone.entity.Reaction;
+import com.uni.twitter.entity.Reaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
