@@ -1,0 +1,47 @@
+@import "../../../css/partial/colors";
+
+.nav-container {
+    border-bottom: 1px solid $grey;
+
+    min-height: 8%;
+    
+    padding: 1rem 1.5rem;
+
+    background-color: $light-grey;
+}
+
+#left__container {
+    mat-icon {
+        float: left;
+    }
+
+    #title {
+        float: left;
+        margin-left: 10px;
+        font-weight: 500;
+        font-size: 20px;
+    }
+}
+
+#right__container {
+
+    width: 15%;
+    float: right;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    #user-info {
+        display: inline-flex;
+
+        p {
+            font-size: 20px;
+            margin: 5px 5px 5px 15px;
+        }        
+    }
+}
+
+mat-icon {
+    font-size: 30px;
+}
