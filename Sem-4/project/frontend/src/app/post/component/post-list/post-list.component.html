@@ -1,0 +1,8 @@
+<ng-container *ngFor="let post of postList">
+    <app-post [post]="post" 
+    (onDeleteEvent)="onDelete($event)"
+    (onUpdateEvent)="onUpdate($event)"
+    (onReactionEvent)="onReaction($event)"
+    (onCommentEvent)="onComment($event)">
+    </app-post>
+</ng-container>
