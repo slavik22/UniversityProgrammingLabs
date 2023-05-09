@@ -7,14 +7,28 @@
     @include mx-auth-card;
 }
 
+// button {
+//     position: absolute;
+//     bottom: 10px;
+//     left: 0;
+//     right: 0;
+//     margin-left: auto;
+//     margin-right: auto;
+//     width: 80%;
+// }
+
 button {
     position: absolute;
     bottom: 10px;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
+    width: 150px;
+}
+
+#register {
+    right: 10px;
+}
+
+#login {
+    left: 10px;
 }
 
 mat-form-field {

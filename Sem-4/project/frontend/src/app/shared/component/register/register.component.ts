@@ -35,6 +35,10 @@ export class RegisterComponent {
     );
   }
 
+  public onLogin(): void {
+    this._router.navigateByUrl('login');
+  }
+
   private _buildAuthForm(): FormGroup {
     return this._formBuilder.group({
       username: [null, Validators.required],
@@ -42,4 +46,5 @@ export class RegisterComponent {
       password: [null, Validators.required],
     })
   }
+
 }

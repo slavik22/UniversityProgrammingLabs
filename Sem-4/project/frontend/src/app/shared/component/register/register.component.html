@@ -26,8 +26,8 @@
                 <span>{{errorMessage}}</span>
             </ng-container>
 
-            <button id="register" [disabled]="authForm.invalid" type="submit" mat-raised-button
-                color="warn">Register</button>
+            <button id="login" (click)="onLogin()" type="button" mat-raised-button color="primary">Login</button>
+            <button id="register" [disabled]="authForm.invalid" type="submit" mat-raised-button color="warn">Register</button>
         </form>
     </div>
 </div>

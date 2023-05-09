@@ -1,6 +1,5 @@
 <header class="nav-container">
     <div id="left__container">
-        <mat-icon>public</mat-icon>
         <h3 id="title">Twitter</h3>
     </div>
     <div id="right__container">
@@ -9,6 +8,5 @@
             <p>{{username}}</p>
         </span>
         <button *ngIf="username" (click)="logout()" mat-raised-button>Logout</button>
-        <button *ngIf="!username" color="primary" (click)="login()" mat-raised-button>Login</button>
     </div>
 </header>
