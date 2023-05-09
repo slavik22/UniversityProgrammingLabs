@@ -1,0 +1,33 @@
+<div class="post__container">
+    <div class="post-title__container">
+        <p>{{post?.title}}</p>
+        <span class="user">
+            <span>{{post?.creationUser}}</span>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onUpdate()">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="onDelete()">
+                    <mat-icon>delete</mat-icon>
+                    <span>Remove</span>
+                </button>
+            </mat-menu>
+        </span>
+    </div>
+    <div class="post-content__container">
+        <p>{{post?.description}}</p>
+    </div>
+    <div class="post-footer__container" *ngIf="showAction">
+        <mat-icon (click)="onAddReaction('LIKE')" class="reaction" matBadgePosition="before" [matBadge]="likeCounter"
+            matBadgeColor="primary">thumb_up</mat-icon>
+        <mat-icon (click)="onAddReaction('LOVE')" class="reaction" matBadgePosition="before" [matBadge]="loveCounter"
+            matBadgeColor="accent">favorite</mat-icon>
+        <mat-icon (click)="onAddReaction('SMILE')" class="reaction" matBadgePosition="before" [matBadge]="smileCounter"
+            matBadgeColor="warn">mood</mat-icon>
+        <mat-icon (click)="onCommentClick()" class="comment" [matBadge]="commentCounter" matBadgeColor="warn">chat</mat-icon>
+    </div>
+</div>
