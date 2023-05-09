@@ -1,0 +1,16 @@
+<form [formGroup]="postForm" (ngSubmit)="onFormSubit(formDirective)" #formDirective="ngForm">
+    <h3>{{title}}</h3>
+    <mat-form-field appearance="fill">
+        <mat-label>What are you thinking?</mat-label>
+        <input matInput formControlName="title">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea maxlength="250" matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <div class="form-button__container">
+        <button *ngIf="isEdit" (click)="onCancel()" type="button" mat-raised-button
+            color="basic">{{cancelLabel}}</button>
+        <button type="submit" mat-raised-button color="primary">{{saveLabel}}</button>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+@import "../../../css/partial/colors";
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  padding: 10px;
+
+  border: 1px solid $grey;
+
+  h3 {
+    float: left;
+    width: 100%;
+  }
+
+  mat-form-field {
+    width: 500px;
+  }
+
+  textarea {
+    resize: none;
+    overflow: auto;
+    height: 100px;
+  }
+  
+}
+
+.form-button__container {
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  button {
+    width: 30%;
+  }
+} 
