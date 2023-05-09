@@ -1,0 +1,37 @@
+@import "../../../css/partial/colors";
+@import "../../../css/partial/auth";
+
+#container {
+    height: 100%;
+
+    @include mx-profile;
+    @include mx-auth-card;
+}
+
+button {
+    position: absolute;
+    bottom: 10px;
+    width: 150px;
+}
+
+#register {
+    left: 10px;
+}
+
+#login {
+    right: 10px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.error-container {
+    width: 100%;
+    min-height: 30px;
+    background-color: $error;
+}
+
+span {
+    color: $white;
+}
