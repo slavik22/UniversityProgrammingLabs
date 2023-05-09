@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/post' , pathMatch: 'full'},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'post', loadChildren: () => import('./post/post.module').then(m => m.PostModule), canActivate: [AuthGuard] },
+  // { path: 'post', loadChildren: () => import('./post/post.module').then(m => m.PostModule), canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
