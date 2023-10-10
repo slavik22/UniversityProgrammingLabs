@@ -81,6 +81,6 @@ class Forest{
 
 public class Main {
     public static void main(String[] args) {
-        Forest forest = new Forest(101, 10);
+        Forest forest = new Forest(100, 7);
     }
 }

@@ -13,7 +13,6 @@ class Pot {
         while(isFull()){
             try {
                 wait();
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

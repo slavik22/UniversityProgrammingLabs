@@ -30,8 +30,6 @@ class myThread extends Thread {
     }
 }
 public class Main {
-
-
     static private Thread thread1;
     static private Thread thread2;
     public static void main(String[] args) {

@@ -1,0 +1,35 @@
+<h1>Schools</h1>
+
+<ul>
+  <% @schools.each do |school| %>
+    <li>
+      <a href="<%= school_path(school) %>">
+        <%= school.name %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Add School", new_school_path %>
+
+<table class='table'>
+  <tr>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>School</th>
+    <th>Language</th>
+    <th>Age</th>
+    <th>Grade</th>
+  </tr>
+
+  <% @students.each do |student|  %>
+    <tr>
+      <th><%= student.name%></th>
+      <th><%= student.surname%></th>
+      <th><%= student.school.name%></th>
+      <th><%= student.language%></th>
+      <th><%= student.age%></th>
+      <th><%= student.grade%></th>
+    </tr>
+  <% end %>
+</table>

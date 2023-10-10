@@ -77,28 +77,8 @@ class Matrix {
     public void UnlockRead(int i, int j) {locks.get(i).get(j).ReadUnlock();}
     public void LockWrite(int i, int j) {locks.get(i).get(j).WriteLock();}
 
-    public void LockWrite(int i) {
-        for (int j = 0; j < locks.get(i).size(); j++) {
-            LockWrite(i, j);
-        }
-    }
-    public void UnLockWrite(int i) {
-        for (int j = 0; j < locks.get(i).size(); j++) {
-            UnlockWrite(i, j);
-        }
-    }
     public void UnlockWrite(int i, int j) {locks.get(i).get(j).WriteUnlock();}
 
-    public void LockRead() {
-        for (int i = 0; i < locks.size(); i++)
-            for (int j = 0; j< locks.get(0).size(); j++)
-                LockRead(i ,j);
-    }
-    public void UnlockRead() {
-        for (int i = 0; i < locks.size(); i++)
-            for (int j = 0; j< locks.get(0).size(); j++)
-                UnlockRead(i ,j);
-    }
 
     public void matrixOutput() {
         try {

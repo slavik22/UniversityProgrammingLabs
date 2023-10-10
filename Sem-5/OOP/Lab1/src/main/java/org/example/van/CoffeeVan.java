@@ -25,19 +25,19 @@ public class CoffeeVan {
     }
 
     public boolean loadCargo(Coffee item) {
-        if(item.getWeight() + getWeight() <= maxWeight && budget + item.getPrice() <= maxBudget){
+        if(item.getWeight() + getWeight() <= maxWeight && budget + item.getPrice() <= maxBudget)
+        {
             cargo.add(item);
             budget += item.getPrice();
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     public double getWeight(){
-        if (cargo.size() == 0)
+        if (cargo.size() == 0){
             return 0;
+        }
         return cargo.stream().mapToDouble(Coffee::getWeight).sum();
     }
 
