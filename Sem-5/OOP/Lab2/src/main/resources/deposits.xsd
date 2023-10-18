@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Bank">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Deposit" type="DepositType" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="DepositType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="country" type="xs:string"/>
+            <xs:element name="type" type="DepositTypeEnum"/>
+            <xs:element name="depositor" type="xs:string"/>
+            <xs:element name="accountId" type="xs:integer"/>
+            <xs:element name="amount" type="xs:decimal"/>
+            <xs:element name="profitability" type="xs:decimal"/>
+            <xs:element name="timeConstraints" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="DepositTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ondemand"/>
+            <xs:enumeration value="urgent"/>
+            <xs:enumeration value="settlement"/>
+            <xs:enumeration value="accumulative"/>
+            <xs:enumeration value="savings"/>
+            <xs:enumeration value="metal"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

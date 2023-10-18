@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bank>
+    <Deposit>
+        <name>Example Bank</name>
+        <country>United States</country>
+        <type>ondemand</type>
+        <depositor>John Doe</depositor>
+        <accountId>12345</accountId>
+        <amount>50000</amount>
+        <profitability>5.0</profitability>
+        <timeConstraints>12 months</timeConstraints>
+    </Deposit>
+    <Deposit>
+        <name>Sample Bank</name>
+        <country>Canada</country>
+        <type>savings</type>
+        <depositor>Alice Smith</depositor>
+        <accountId>67890</accountId>
+        <amount>75000</amount>
+        <profitability>4.5</profitability>
+        <timeConstraints>24 months</timeConstraints>
+    </Deposit>
+    <!-- Add more Deposit entries as needed -->
+</Bank>
