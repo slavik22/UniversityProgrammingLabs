@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-public class Bus extends Thread {
+class Bus extends Thread {
     private final int busNumber;
     private final Route route;
 
@@ -32,7 +32,7 @@ public class Bus extends Thread {
 }
 
 
-public class Stop {
+class Stop {
     private final String name;
     private final Semaphore s;
 
@@ -54,7 +54,7 @@ public class Stop {
 
 
 
-public class Route {
+class Route {
     private final List<Stop> stops;
 
     public Route() {
@@ -71,7 +71,7 @@ public class Route {
 }
 
 
-public class Main {
+public class Task4Java {
     public static void main(String[] args) {
         int maxBusesAtStop = 2,
                 busesCount = 10;
