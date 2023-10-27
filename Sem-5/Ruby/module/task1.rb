@@ -1,17 +1,3 @@
-# Variant 4 
-# print "Enter x begin:\n"
-# x_begin = gets.chomp.to_f
-# print "Enter x end:\n"
-# x_end = gets.chomp.to_f
-
-# print "Enter a,b,c:\n"
-# a = gets.chomp.to_f
-# b = gets.chomp.to_f
-# c = gets.chomp.to_f
-
-# print "Enter dx:\n"
-# delta = gets.chomp.to_f
-
 def func(x_begin, x_end, a, b, c, delta)
   result = []
   (x_begin..x_end).step(delta) do |i|
@@ -27,16 +13,11 @@ def func(x_begin, x_end, a, b, c, delta)
     result.push(f)
   end
 
-  if(a.truncate % b.truncate) == 0 and (a.truncate or c.truncate) != 0
-    result.length.times do |i|
-      result[i] = result[i].to_i
-    end
+  result.length.times do |i|
+    result[i] = result[i].to_i
   end
   result
 end
-
-# print "Result: #{func(x_begin, x_end, a, b, c, delta)} \n"
-
 
 def tests
   test1
