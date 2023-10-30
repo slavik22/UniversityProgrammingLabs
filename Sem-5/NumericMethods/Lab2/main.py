@@ -1,13 +1,15 @@
-import numpy as np
+import numpy as np 
+
 
 def random_matrix(n, min_value=1, max_value=10):
-    return np.random.randint(min_value, max_value + 1, size=(n, n+1)) 
+    matrix = np.random.randint(min_value, max_value + 1, size=(n, n))
+    return np.column_stack((matrix, matrix.sum(axis=1)))
 
 def generate_diagonally_dominant_matrix(n, min_value=1, max_value=10):
-    A = random_matrix(n)
+    A = np.random.randint(min_value, max_value + 1, size=(n, n))
     diagonal = np.sum(np.abs(A), axis=1)
     np.fill_diagonal(A, diagonal)
-    return A
+    return np.column_stack((A, A.sum(axis=1)))
 
 def generate_hilbert_matrix(n):
     hilbert_matrix = np.zeros((n, n), dtype=float)
@@ -27,7 +29,7 @@ def generate_hilbert_matrix(n):
 
 # ])
 
-a = generate_diagonally_dominant_matrix(10)
+a = generate_diagonally_dominant_matrix(100)
 # a = generate_hilbert_matrix(5)
 print(a)
 
