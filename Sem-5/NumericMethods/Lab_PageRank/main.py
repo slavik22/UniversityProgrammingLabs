@@ -4,6 +4,7 @@ import networkx as nx
 def get_google_matrix(G, d=0.15):
     n = G.number_of_nodes()
     A = nx.to_numpy_array(G).T
+    
     # for sink nodes
     is_sink = np.sum(A, axis=0)==0
     B = (np.ones_like(A) - np.identity(n)) / (n-1)
@@ -32,13 +33,10 @@ def l1(x):
     return np.sum(np.abs(x))
 
 
-# Create a simple directed graph using NetworkX
 G = nx.DiGraph()
 G.add_edges_from([(1, 2), (2, 1), (2, 3), (3, 1), (3, 4), (4, 3)])
 
-# Calculate PageRank using your code
 pagerank = pagerank_power(G, d=0.15)
 
-# Print the PageRank scores for each node
 for node, score in enumerate(pagerank):
     print(f'Node {node + 1}: {score:.4f}')
