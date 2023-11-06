@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<learning_division>
+    <group id="1" name="IPS-33">
+        <student first_name="Yarosla" id="1" last_name="Shevchenkp"/>
+        <student first_name="Ivan" id="2" last_name="Ivanov"/>
+        <student first_name="Petro" id="5" last_name="Franko"/>
+    </group>
+    <group id="2" name="IPS-32"/>
+</learning_division>
