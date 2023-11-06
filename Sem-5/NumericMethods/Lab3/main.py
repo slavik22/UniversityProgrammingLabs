@@ -1,41 +1,44 @@
 import numpy as np
+import networkx as nx
 
-def pagerank(graph, damping_factor=0.85, max_iterations=100, tolerance=1e-6):
-    num_pages = len(graph)
+def get_google_matrix(G, d=0.15):
+    n = G.number_of_nodes()
+    A = nx.to_numpy_array(G).T
+    # for sink nodes
+    is_sink = np.sum(A, axis=0)==0
+    B = (np.ones_like(A) - np.identity(n)) / (n-1)
+    A[:, is_sink] += B[:, is_sink]
     
-    # Initialize the transition matrix
-    transition_matrix = np.zeros((num_pages, num_pages))
-    for i in range(num_pages):
-        outgoing_links = sum(graph[i])
-        for j in range(num_pages):
-            if outgoing_links == 0:
-                transition_matrix[i, j] = 1 / num_pages
-            else:
-                transition_matrix[i, j] = damping_factor * (graph[i][j] / outgoing_links) + (1 - damping_factor) / num_pages
+    D_inv = np.diag(1/np.sum(A, axis=0))
+    M = np.dot(A, D_inv) 
     
-    # Initialize the PageRank vector
-    pagerank_vector = np.ones(num_pages) / num_pages
-    
-    for iteration in range(max_iterations):
-        new_pagerank_vector = np.dot(transition_matrix, pagerank_vector)
-        
-        # Check for convergence
-        if np.linalg.norm(new_pagerank_vector - pagerank_vector) < tolerance:
-            return new_pagerank_vector
-        
-        pagerank_vector = new_pagerank_vector
+    # for disconnected components
+    M = (1-d)*M + d*np.ones((n,n))/n
+    return M
 
-    return pagerank_vector
 
-# Example usage:
-# Define a simple web graph as an adjacency matrix
-graph = [
-    [0, 1, 0, 0],
-    [1, 0, 1, 0],
-    [0, 1, 0, 1],
-    [0, 0, 1, 0]
-]
+def pagerank_power(G, d=0.15, max_iter=100, eps=1e-9):
+    M = get_google_matrix(G, d=d)
+    n = G.number_of_nodes()
+    V = np.ones(n)/n
+    for _ in range(max_iter):
+        V_last = V
+        V = np.dot(M, V)
+        if  l1(V-V_last)/n < eps:
+            return V
+    return V
 
-pagerank_scores = pagerank(graph)
-for i, score in enumerate(pagerank_scores):
-    print(f'Page {i + 1}: {score:.4f}')
+def l1(x):
+    return np.sum(np.abs(x))
+
+
+# Create a simple directed graph using NetworkX
+G = nx.DiGraph()
+G.add_edges_from([(1, 2), (2, 1), (2, 3), (3, 1), (3, 4), (4, 3)])
+
+# Calculate PageRank using your code
+pagerank = pagerank_power(G, d=0.15)
+
+# Print the PageRank scores for each node
+for node, score in enumerate(pagerank):
+    print(f'Node {node + 1}: {score:.4f}')
