@@ -2,7 +2,6 @@ package org.example.models;
 
 public class Deposit {
     private String name;
-
     private String country;
     private Type type;
     private String depositor;

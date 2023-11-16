@@ -1,7 +1,6 @@
 package org.example.parsers;
 
 import org.example.models.Deposit;
-import org.example.models.DepositHandler;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

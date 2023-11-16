@@ -1,6 +1,18 @@
 import numpy as np
 from numpy import cos, sin, pi, exp, sqrt,abs
 
+def F(x):
+        return np.array(
+            [x[0]**2 - 2*x[0]*x[1] + 1,
+            x[0]**2 + x[1]**2 - 2])
+
+def J(x):
+        return np.array([
+            [2*x[0] - 2*x[1],-2*x[0]],
+            [2*x[0],2*x[1]]
+            ])
+
+
 def Newton_system(F, J, x, eps):
     F_value = F(x)
     F_norm = np.linalg.norm(F_value, ord=2)
@@ -15,17 +27,6 @@ def Newton_system(F, J, x, eps):
     if abs(F_norm) > eps:
         iteration_counter = -1
     return x, iteration_counter
-
-def F(x):
-        return np.array(
-            [x[0]**2 - 2*x[0]*x[1] + 1,
-            x[0]**2 + x[1]**2 - 2])
-
-def J(x):
-        return np.array([
-            [2*x[0] - 2*x[1],-2*x[0]],
-            [2*x[0],2*x[1]]
-            ])
 
 
 def relaxation_method(F, x0, tau=0.3, tol=1e-6, max_iter=100):
