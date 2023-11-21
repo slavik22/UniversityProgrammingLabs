@@ -1,8 +1,8 @@
 package com.codes.mychess;
 
-import static com.codes.mychess.isValidTurn.*;
-import static com.codes.mychess.storage.*;
-import static com.codes.mychess.turnMethods.*;
+import static com.codes.mychess.IsValidTurn.*;
+import static com.codes.mychess.Storage.*;
+import static com.codes.mychess.TurnMethods.*;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class gameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     ActionBar aB;
 
@@ -23,25 +23,21 @@ public class gameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // sets content view to the game activity
         setContentView(R.layout.activity_game);
 
         aB = getSupportActionBar();
 
-        // hiding the action bar
         try {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
 
-        // displays the names that the users have chosen for them
         TextView name_black = findViewById(R.id.name_black);
         name_black.setText(playerBlack);
 
         TextView name_white = findViewById(R.id.name_white);
         name_white.setText(playerWhite);
 
-        // resets some values in storage
         playersTurn = "white";
         selectedField = "";
         selectionStage = 0;
@@ -37599,7 +37595,7 @@ public class gameActivity extends AppCompatActivity {
 
     public void buttonBack(View view) {
         // creating a new intent
-        Intent intent = new Intent(gameActivity.this, MainActivity.class);
+        Intent intent = new Intent(GameActivity.this, MainActivity.class);
 
         // resetting some values
         turns = 0;
@@ -37607,7 +37603,7 @@ public class gameActivity extends AppCompatActivity {
         selectedField = "";
 
         // switching to the MainActivity
-        gameActivity.this.startActivity(intent);
+        GameActivity.this.startActivity(intent);
     }
 
     public void buttonClickGameRules(View view) {

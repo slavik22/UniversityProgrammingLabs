@@ -1,8 +1,8 @@
 package com.codes.mychess;
 
-import static com.codes.mychess.storage.*;
+import static com.codes.mychess.Storage.*;
 
-public class specificMovingRules
+public class SpecificMovingRules
 {
     public static boolean knight (String destinationField)
     {

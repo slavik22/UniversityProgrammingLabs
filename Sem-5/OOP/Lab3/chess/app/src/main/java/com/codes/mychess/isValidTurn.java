@@ -1,10 +1,10 @@
 package com.codes.mychess;
 
-import static com.codes.mychess.storage.*;
-import static com.codes.mychess.turnMethods.getColor;
-import static com.codes.mychess.specificMovingRules.*;
+import static com.codes.mychess.Storage.*;
+import static com.codes.mychess.TurnMethods.getColor;
+import static com.codes.mychess.SpecificMovingRules.*;
 
-public class isValidTurn {
+public class IsValidTurn {
 
     public static boolean validSelection(String figureName)
     {

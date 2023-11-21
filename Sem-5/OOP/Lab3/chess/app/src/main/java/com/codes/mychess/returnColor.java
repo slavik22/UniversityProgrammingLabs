@@ -2,7 +2,7 @@ package com.codes.mychess;
 
 import android.net.IpSecManager;
 
-public class returnColor {
+public class ReturnColor {
 
     // returns the color of any gives figure name
     public static String whatColor(String id) {

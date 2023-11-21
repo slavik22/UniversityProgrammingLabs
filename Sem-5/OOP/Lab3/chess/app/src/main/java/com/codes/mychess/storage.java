@@ -1,7 +1,7 @@
 package com.codes.mychess;
 
 // this class is just a storage for some values that should be globally accessible
-public class storage {
+public class Storage {
 
     // the starting layout of the chessboard which gets updated after every turn
     public static String[][] chessboard = {

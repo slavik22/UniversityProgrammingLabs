@@ -1,6 +1,6 @@
 package com.codes.mychess;
 
-import static com.codes.mychess.storage.*;
+import static com.codes.mychess.Storage.*;
 
 import android.graphics.Color;
 import android.media.Image;
@@ -17,7 +17,7 @@ import javax.xml.namespace.QName;
 
 // this class has all of the methods used in every turn if possible (if they include a ".findViewById()" I couldn't keep them here
 // because of the declaration they would have produced a NullPointerException so I moved them in the gameActivity
-public class turnMethods {
+public class TurnMethods {
 
     // checks after every turn if the game is over by checking ff the two kings are still there
     public static boolean isGameOver()
