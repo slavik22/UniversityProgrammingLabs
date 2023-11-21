@@ -94,9 +94,9 @@ def plot_interpolations(f, a, b, n):
     plt.figure(figsize=(10, 6))
     plt.plot(x_interp, f_numeric(x_interp), label='Original Function', linestyle='dashed', color='black')
     plt.scatter(x_vals, y_vals, label='Interpolation Points', color='red')
-    # plt.plot(x_interp, lagrange_interp, label='Lagrange Interpolation', linestyle='dashed', color='blue')
-    # plt.plot(x_interp, newton_interp, label='Newton Interpolation', linestyle='dashed', color='green')
-    plt.plot(x_interp, cubic_spline_interp, label='Cubic Spline Interpolation', linestyle='dashed', color='orange')
+    plt.plot(x_interp, lagrange_interp, label='Lagrange Interpolation', linestyle='dashed', color='blue')
+    plt.plot(x_interp, newton_interp, label='Newton Interpolation', linestyle='dashed', color='green')
+    # plt.plot(x_interp, cubic_spline_interp, label='Cubic Spline Interpolation', linestyle='dashed', color='orange')
 
     plt.title('Interpolation Comparison')
     plt.xlabel('x')

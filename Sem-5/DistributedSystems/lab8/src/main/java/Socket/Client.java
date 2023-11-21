@@ -12,85 +12,76 @@ public class Client {
     static PrintWriter out = null;
     static BufferedReader in = null;
 
-    public static void addNewCategory() {
-        System.out.println("Enter category ID: ");
-        String newCategoryId = scanner.nextLine();
-        System.out.println("Enter category name: ");
-        String newCategoryName = scanner.nextLine();
-        out.println(generateLineWithSeparator("1", newCategoryId, newCategoryName));
+    public static void addNewGroup() {
+        System.out.println("Enter group ID: ");
+        String newGroupId = scanner.nextLine();
+        System.out.println("Enter group name: ");
+        String newGroupName = scanner.nextLine();
+        out.println(generateLineWithSeparator("1", newGroupId, newGroupName));
     }
 
-    public static void deleteCategory() {
-        System.out.println("Enter category ID: ");
-        String categoryId = scanner.nextLine();
-        out.println(generateLineWithSeparator("2", categoryId));
+    public static void deleteGroup() {
+        System.out.println("Enter group ID: ");
+        String groupId = scanner.nextLine();
+        out.println(generateLineWithSeparator("2", groupId));
     }
 
-    public static void addProductToCategory() {
-        System.out.println("Enter product ID: ");
-        String newProductId = scanner.nextLine();
-        System.out.println("Enter product name: ");
-        String newProductName = scanner.nextLine();
-        System.out.println("Enter product amount: ");
-        String newProductAmount = scanner.nextLine();
-        System.out.println("Enter product price: ");
-        String newProductPrice = scanner.nextLine();
-        System.out.println("Enter product category ID: ");
-        String newProductCategoryId = scanner.nextLine();
-        out.println(generateLineWithSeparator("3", newProductId, newProductName,newProductAmount ,newProductPrice , newProductCategoryId));
+    public static void addStudentToGroup() {
+        System.out.println("Enter student ID: ");
+        String newStudentId = scanner.nextLine();
+        System.out.println("Enter student first name: ");
+        String newStudentFirstName = scanner.nextLine();
+        System.out.println("Enter student last name: ");
+        String newStudentLastName = scanner.nextLine();
+        System.out.println("Enter student group ID: ");
+        String newStudentGroupId = scanner.nextLine();
+        out.println(generateLineWithSeparator("3", newStudentId, newStudentFirstName,newStudentLastName, newStudentGroupId));
     }
 
-    public static void deleteProduct() {
-        System.out.println("Enter product ID: ");
-        String productId = scanner.nextLine();
-        out.println(generateLineWithSeparator("4", productId));
+    public static void deleteStudent() {
+        System.out.println("Enter student ID: ");
+        String studentId = scanner.nextLine();
+        out.println(generateLineWithSeparator("4", studentId));
     }
 
-    public static void editProduct() {
-        System.out.println("Enter product ID: ");
-        String productId = scanner.nextLine();
-        System.out.println("Enter product name: ");
-        String newProductName = scanner.nextLine();
-        System.out.println("Enter product amount: ");
-        String newProductAmount = scanner.nextLine();
-        System.out.println("Enter product price: ");
-        String newProductPrice = scanner.nextLine();
-        out.println(generateLineWithSeparator("5", productId, newProductName,newProductAmount, newProductPrice));
+    public static void editStudent() {
+        System.out.println("Enter student ID: ");
+        String studentId = scanner.nextLine();
+        System.out.println("Enter group ID: ");
+        String groupId = scanner.nextLine();
+        System.out.println("Enter student first name: ");
+        String firstName = scanner.nextLine();
+        System.out.println("Enter student last name: ");
+        String lastName = scanner.nextLine();
+        out.println(generateLineWithSeparator("5", studentId, groupId,firstName, lastName));
     }
 
-    public static void countProductsInCategory() {
-        System.out.println("Enter category ID: ");
-        String categoryId = scanner.nextLine();
-        out.println(generateLineWithSeparator("6", categoryId));
+    public static void countStudentsInGroup() {
+        System.out.println("Enter group ID: ");
+        String groupId = scanner.nextLine();
+        out.println(generateLineWithSeparator("6", groupId));
     }
 
-    public static void searchProductByName() {
-        System.out.println("Enter product name: ");
-        String productName = scanner.nextLine();
-        out.println(generateLineWithSeparator("7", productName));
+    public static void getAllStudentsInGroup() {
+        System.out.println("Enter group ID: ");
+        String groupId = scanner.nextLine();
+        out.println(generateLineWithSeparator("7", groupId));
     }
 
-    public static void getAllProductsInCategory() {
-        System.out.println("Enter category ID: ");
-        String categoryId = scanner.nextLine();
-        out.println(generateLineWithSeparator("8", categoryId));
-    }
-
-    public static void getAllCategories() {
-        out.println(generateLineWithSeparator("9"));
+    public static void getAllGroups() {
+        out.println(generateLineWithSeparator("8"));
     }
 
     public static void showMenu() {
-        System.out.println("1. Add a new category");
-        System.out.println("2. Delete a category");
-        System.out.println("3. Add product to a category");
-        System.out.println("4. Delete a product");
-        System.out.println("5. Edit a product");
-        System.out.println("6. Count total amount of products in a category");
-        System.out.println("7. Search for a product by name");
-        System.out.println("8. Get all products in a category");
-        System.out.println("9. Get all categories");
-        System.out.println("10. Exit");
+        System.out.println("1. Add a new group");
+        System.out.println("2. Delete a group");
+        System.out.println("3. Add student to a group");
+        System.out.println("4. Delete a student");
+        System.out.println("5. Edit a student");
+        System.out.println("6. Count total amount of students in a group");
+        System.out.println("7. Get all students in a group");
+        System.out.println("8. Get all groups");
+        System.out.println("9. Exit");
     }
 
     public static String generateLineWithSeparator(String... args) {
@@ -108,6 +99,9 @@ public class Client {
     public static void readResponse() {
         try {
             String response = in.readLine();
+            if(response == null){
+                return;
+            }
             String[] responseParts = parseLine(response);
             System.out.println("CLIENT:");
             System.out.println("Status: ");
@@ -132,16 +126,15 @@ public class Client {
                 choice = scanner.nextLine();
 
                 switch (choice) {
-                    case "1" -> addNewCategory();
-                    case "2" -> deleteCategory();
-                    case "3" -> addProductToCategory();
-                    case "4" -> deleteProduct();
-                    case "5" -> editProduct();
-                    case "6" -> countProductsInCategory();
-                    case "7" -> searchProductByName();
-                    case "8" -> getAllProductsInCategory();
-                    case "9" -> getAllCategories();
-                    case "10" -> {
+                    case "1" -> addNewGroup();
+                    case "2" -> deleteGroup();
+                    case "3" -> addStudentToGroup();
+                    case "4" -> deleteStudent();
+                    case "5" -> editStudent();
+                    case "6" -> countStudentsInGroup();
+                    case "7" -> getAllStudentsInGroup();
+                    case "8" -> getAllGroups();
+                    case "9" -> {
                         System.out.println("CLIENT: Exit");
                         out.println(generateLineWithSeparator("10"));
                         socket.close();

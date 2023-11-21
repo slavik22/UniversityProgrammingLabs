@@ -1,6 +1,8 @@
 package Socket;
 
-import Grocery.*;
+import DAO.DataAccessObject;
+import Models.Group;
+import Models.Student;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,13 +10,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 public class Server {
     static ServerSocket server = null;
     static Socket socket = null;
     static BufferedReader in = null;
     static PrintWriter out = null;
-    static Grocery grocery = new Grocery();
+    static DataAccessObject dao = new DataAccessObject();
 
     public static String generateLineWithSeparator(String... args) {
         StringBuilder line = new StringBuilder();
@@ -48,116 +51,98 @@ public class Server {
         }
     }
 
-    public static void addNewCategory(String[] queryParts) {
+    public static void addNewGroup(String[] queryParts) {
         try {
-            System.out.println("SERVER: addNewCategory");
+            System.out.println("SERVER: addNewGroup");
             if (paramsAreInvalid(3, queryParts.length)) return;
-            int categoryId = Integer.parseInt(queryParts[1]);
-            String categoryName = queryParts[2];
-            grocery.addProductCategory(new Category(categoryId, categoryName));
-            sendResponse(ServerResponse.SUCCESS.getStatus(), "Category added successfully");
+            int groupId = Integer.parseInt(queryParts[1]);
+            String groupName = queryParts[2];
+            dao.createNewGroup(new Group(groupName, groupId));
+            sendResponse(ServerResponse.SUCCESS.getStatus(), "Group added successfully");
         } catch (Exception e) {
             sendResponse(ServerResponse.INVALID_PARAMS.getStatus());
         }
     }
 
-    public static void deleteCategory(String[] queryParts) {
+    public static void deleteGroup(String[] queryParts) {
         try {
-            System.out.println("SERVER: deleteCategory");
+            System.out.println("SERVER: deleteGroup");
             if (paramsAreInvalid(2, queryParts.length)) return;
-            int categoryId = Integer.parseInt(queryParts[1]);
-            grocery.deleteProductCategory(categoryId);
-            sendResponse(ServerResponse.SUCCESS.getStatus(), "Category deleted successfully");
+            int groupId = Integer.parseInt(queryParts[1]);
+            dao.deleteGroup(groupId);
+            sendResponse(ServerResponse.SUCCESS.getStatus(), "Group deleted successfully");
         } catch (Exception e) {
             sendResponse(ServerResponse.INVALID_PARAMS.getStatus());
         }
     }
 
-    public static void addProductToCategory(String[] queryParts) {
+    public static void addStudentToGroup(String[] queryParts) {
         try {
-            System.out.println("SERVER: addProductToCategory");
-            if (paramsAreInvalid(6, queryParts.length)) return;
-            int productId = Integer.parseInt(queryParts[1]);
-            String productName = queryParts[2];
-            int productAmount = Integer.parseInt(queryParts[3]);
-            int productPrice = Integer.parseInt(queryParts[4]);
-            int categoryId = Integer.parseInt(queryParts[5]);
-            grocery.addProduct(categoryId, new Product(productId, productName, productAmount, productPrice));
-            sendResponse(ServerResponse.SUCCESS.getStatus(), "Product added successfully");
+            System.out.println("SERVER: addStudentToGroup");
+            if (paramsAreInvalid(5, queryParts.length)) return;
+            int studentId = Integer.parseInt(queryParts[1]);
+            String firstName = queryParts[2];
+            String lastName = queryParts[3];
+            int groupId = Integer.parseInt(queryParts[4]);
+            Group gp = dao.findGroupById(groupId).orElseThrow();
+            dao.createNewStudent(new Student(studentId,firstName, lastName, gp));
+            sendResponse(ServerResponse.SUCCESS.getStatus(), "Student added successfully");
         } catch (Exception e) {
             sendResponse(ServerResponse.INVALID_PARAMS.getStatus());
         }
     }
 
-    public static void deleteProduct(String[] queryParts) {
+    public static void deleteStudent(String[] queryParts) {
         try {
-            System.out.println("SERVER: deleteProduct");
+            System.out.println("SERVER: deleteStudent");
             if (paramsAreInvalid(3, queryParts.length)) return;
-            int categoryId = Integer.parseInt(queryParts[1]);
-            int productId = Integer.parseInt(queryParts[2]);
-            grocery.deleteProduct(categoryId, productId);
-            sendResponse(ServerResponse.SUCCESS.getStatus(), "Product deleted successfully");
+            int studentId = Integer.parseInt(queryParts[1]);
+            dao.deleteStudent(studentId);
+            sendResponse(ServerResponse.SUCCESS.getStatus(), "Student deleted successfully");
         } catch (Exception e) {
             sendResponse(ServerResponse.INVALID_PARAMS.getStatus());
         }
     }
 
-    public static void editProduct(String[] queryParts) {
+    public static void editStudent(String[] queryParts) {
         try {
-            System.out.println("SERVER: editProduct");
+            System.out.println("SERVER: editStudent");
             if (paramsAreInvalid(7, queryParts.length)) return;
-            int categoryId = Integer.parseInt(queryParts[1]);
-            int productId = Integer.parseInt(queryParts[2]);
-            String productName = queryParts[3];
-            int productPrice = Integer.parseInt(queryParts[4]);
-            int productAmount = Integer.parseInt(queryParts[5]);
-            grocery.updateProduct(categoryId, productId, new Product(productId, productName, productAmount, productPrice));
+            int studentId = Integer.parseInt(queryParts[1]);
+            int groupId = Integer.parseInt(queryParts[2]);
+            Group gp = dao.findGroupById(groupId).orElseThrow();
+            String firstName = queryParts[3];
+            String lastName = queryParts[4];
+            dao.updateStudent(new Student(studentId,firstName, lastName, gp));
             sendResponse(ServerResponse.SUCCESS.getStatus(), "Product updated successfully");
         } catch (Exception e) {
             sendResponse(ServerResponse.INVALID_PARAMS.getStatus());
         }
     }
 
-    public static void countProductsInCategory(String[] queryParts) {
+    public static void countStudentsInGroup(String[] queryParts) {
         try {
-            System.out.println("SERVER: countProductsInCategory");
+            System.out.println("SERVER: countStudentsInGroup");
             if (paramsAreInvalid(2, queryParts.length)) return;
-            int categoryId = Integer.parseInt(queryParts[1]);
-            int count = grocery.countProductsInCategory(categoryId);
+            int groupId = Integer.parseInt(queryParts[1]);
+            int count = dao.countStudentsInGroup(groupId);
             sendResponse(ServerResponse.SUCCESS.getStatus(), "Count: " + String.valueOf(count));
         } catch (Exception e) {
             sendResponse(ServerResponse.INVALID_PARAMS.getStatus());
         }
     }
 
-   public static void searchProductByName(String[] queryParts) {
+    public static void getAllStudentsInGroup(String[] queryParts) {
         try {
-            System.out.println("SERVER: searchProductByName");
+            System.out.println("SERVER: getAllStudentsInGroup");
             if (paramsAreInvalid(2, queryParts.length)) return;
-            String productName = queryParts[1];
-            Product product = grocery.searchProductByName(productName);
-            if (product == null) {
-                sendResponse(ServerResponse.SUCCESS.getStatus(), "Product not found");
-            } else {
-                sendResponse(ServerResponse.SUCCESS.getStatus(), "Product found", product.toString() );
-            }
-
-        } catch (Exception e) {
-            sendResponse(ServerResponse.INVALID_PARAMS.getStatus());
-        }
-    }
-
-    public static void getAllProductsInCategory(String[] queryParts) {
-        try {
-            System.out.println("SERVER: getAllProductsInCategory");
-            if (paramsAreInvalid(2, queryParts.length)) return;
-            int categoryId = Integer.parseInt(queryParts[1]);
-            Product[] products = grocery.getAllProductsInCategory(categoryId);
-            if (products == null) {
+            int groupId = Integer.parseInt(queryParts[1]);
+            List<Student> students = dao.findAllStudentsWithGroupId(groupId);
+            if (students == null) {
                 sendResponse(ServerResponse.SUCCESS.getStatus(), "Category not found");
             } else {
-                for (Product product : products) {
-                    sendResponse(product.toString());
+                for (Student student : students) {
+                    sendResponse(student.toString());
                 }
             }
         } catch (Exception e) {
@@ -165,15 +150,15 @@ public class Server {
         }
     }
 
-    public static void getAllCategories() {
+    public static void getAllGroups() {
         try {
-            System.out.println("SERVER: showAllCategories");
-            Category[] categories = grocery.getAllProductCategories();
-            if (categories == null) {
+            System.out.println("SERVER: getAllGroups");
+            List<Group> groups = dao.findAllGroups();
+            if (groups == null) {
                 sendResponse(ServerResponse.SUCCESS.getStatus(), "No categories found");
             } else {
-                for (Category category : categories) {
-                    sendResponse(category.toString());
+                for (Group group : groups) {
+                    sendResponse(group.toString());
                 }
             }
         } catch (Exception e) {
@@ -187,16 +172,15 @@ public class Server {
             String[] queryParts = parseQuery(query);
             String command = queryParts[0];
             switch (command) {
-                case "1" -> addNewCategory(queryParts);
-                case "2" -> deleteCategory(queryParts);
-                case "3" -> addProductToCategory(queryParts);
-                case "4" -> deleteProduct(queryParts);
-                case "5" -> editProduct(queryParts);
-                case "6" -> countProductsInCategory(queryParts);
-                case "7" -> searchProductByName(queryParts);
-                case "8" -> getAllProductsInCategory(queryParts);
-                case "9" -> getAllCategories();
-                case "10" -> {
+                case "1" -> addNewGroup(queryParts);
+                case "2" -> deleteGroup(queryParts);
+                case "3" -> addStudentToGroup(queryParts);
+                case "4" -> deleteStudent(queryParts);
+                case "5" -> editStudent(queryParts);
+                case "6" -> countStudentsInGroup(queryParts);
+                case "7" -> getAllStudentsInGroup(queryParts);
+                case "8" -> getAllGroups();
+                case "9" -> {
                     System.out.println("SERVER: Exit");
                     socket.close();
                     server.close();

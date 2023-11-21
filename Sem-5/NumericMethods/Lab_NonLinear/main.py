@@ -1,5 +1,5 @@
 import numpy as np
-from numpy import cos, sin, pi, exp, sqrt,abs
+from numpy import abs
 
 def F(x):
         return np.array(
