@@ -1,0 +1,14 @@
+Scheduling Type: Interactive (Preemptive)
+Scheduling Name: Round robin
+Simulation Run Time: 1500
+Mean: 500
+Standard Deviation: 450
+Process #	CPU Time	IO Blocking		CPU Completed	CPU Blocked
+0			544 (ms)		30 (ms)			187 (ms)		6 times
+1			503 (ms)		140 (ms)		420 (ms)		6 times
+2			763 (ms)		5 (ms)			30 (ms)			6 times
+3			760 (ms)		90 (ms)			270 (ms)		6 times
+4			696 (ms)		10 (ms)			60 (ms)			6 times
+5			146 (ms)		135 (ms)		146 (ms)		2 times
+6			398 (ms)		35 (ms)			210 (ms)		6 times
+7			177 (ms)		80 (ms)			177 (ms)		2 times
