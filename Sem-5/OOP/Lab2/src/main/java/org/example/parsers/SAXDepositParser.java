@@ -16,6 +16,6 @@ public class SAXDepositParser {
         SAXParser saxParser = saxParserFactory.newSAXParser();
         DepositHandler depositHandler = new DepositHandler();
         saxParser.parse(xml, depositHandler);
-        return depositHandler.getDevices();
+        return depositHandler.getDepositList();
     }
 }

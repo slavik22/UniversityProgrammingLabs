@@ -1,7 +1,9 @@
 import org.example.models.Deposit;
 import org.example.parsers.DOMDepositParser;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +13,9 @@ import static org.junit.Assert.assertEquals;
 
 public class DOMDepositParserTest {
     @Test
-    public void parseDOM() throws IOException, XMLStreamException {
+    public void parseDOM() throws IOException, XMLStreamException, ParserConfigurationException, SAXException {
         File xmlFile = new File("src/main/resources/deposits.xml");
-        List<Deposit> depositList =  DOMDepositParser.parse(xmlFile);
+        List<Deposit> depositList =  DOMDepositParser.parseDOM(xmlFile);
         Deposit first = depositList.get(0);
 
         assertEquals("Example Bank", first.getName());

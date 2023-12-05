@@ -3,85 +3,47 @@ package org.example.parsers;
 import org.example.models.Deposit;
 
 import javax.xml.stream.*;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class StAXDepositParser {
 
-    public static List<Deposit> parse(File file) throws IOException, XMLStreamException {
-        List<Deposit> deposits = new ArrayList<>();
-        Deposit currentDeposit = null;
+    public static List<Deposit> parseStAX(File xml) throws XMLStreamException, FileNotFoundException {
 
-        XMLEventReader reader = XMLInputFactory.newInstance().createXMLEventReader(new FileInputStream(file));
+        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        XMLEventReader reader;
 
-        while (reader.hasNext()) {
-            XMLEvent event = reader.nextEvent();
-            if (event.isStartElement()) {
-                StartElement startElement = event.asStartElement();
-                switch (startElement.getName().getLocalPart()) {
-                    case "Deposit" -> currentDeposit = new Deposit();
-                    case "name" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setName(event.asCharacters().getData());
-                        }
+        DepositHandler depositHandler = new DepositHandler();
+        reader = xmlInputFactory.createXMLEventReader(new FileInputStream(xml));
+
+
+        while(reader.hasNext()) {
+            XMLEvent nextXMLEvent = reader.nextEvent();
+            if(nextXMLEvent.isStartElement()){
+                StartElement startElement = nextXMLEvent.asStartElement();
+
+                nextXMLEvent = reader.nextEvent();
+                String name = startElement.getName().getLocalPart();
+                if(nextXMLEvent.isCharacters()) {
+                    List<Attribute> attributesList = new ArrayList<>();
+                    Iterator<Attribute> iter = startElement.getAttributes();
+                    while(iter.hasNext()) {
+                        attributesList.add(iter.next());
                     }
-                    case "accountId" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setAccountId(event.asCharacters().getData());
-                        }
+                    Map<String, String> attributeMap = new HashMap<>();
+
+                    for(Attribute attribute : attributesList){
+                        attributeMap.put(attribute.getName().getLocalPart(), attribute.getValue());
                     }
-                    case "country" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setCountry(event.asCharacters().getData());
-                        }
-                    }
-                    case "depositor" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setDepositor(event.asCharacters().getData());
-                        }
-                    }
-                    case "amount" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setAmountOnDeposit(Double.parseDouble(event.asCharacters().getData()));
-                        }
-                    }
-                    case "profitability" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setProfitability(Double.parseDouble(event.asCharacters().getData()));
-                        }
-                    }
-                    case "timeConstraints" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setTimeConstraints(event.asCharacters().getData());
-                        }
-                    }
-                    case "type" -> {
-                        event = reader.nextEvent();
-                        if (currentDeposit != null) {
-                            currentDeposit.setType(Deposit.Type.valueOf(event.asCharacters().getData().toUpperCase()));
-                        }
-                    }
-                }
-            }
-            if (event.isEndElement()) {
-                EndElement endElement = event.asEndElement();
-                if (endElement.getName().getLocalPart().equals("Deposit")) {
-                    deposits.add(currentDeposit);
+                    depositHandler.setField(name, nextXMLEvent.asCharacters().getData(), attributeMap);
                 }
             }
         }
-        return deposits;
+        return depositHandler.getDepositList();
     }
 }
 

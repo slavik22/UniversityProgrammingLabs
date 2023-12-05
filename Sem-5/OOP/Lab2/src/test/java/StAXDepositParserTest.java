@@ -1,6 +1,7 @@
 import org.example.models.Deposit;
 import org.example.parsers.StAXDepositParser;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
@@ -11,9 +12,9 @@ import static org.junit.Assert.assertEquals;
 
 public class StAXDepositParserTest {
     @Test
-    public void parseStAX() throws IOException, XMLStreamException {
+    public void parseStAX() throws IOException, XMLStreamException, SAXException {
         File xmlFile = new File("src/main/resources/deposits.xml");
-        List<Deposit> depositList =  StAXDepositParser.parse(xmlFile);
+        List<Deposit> depositList =  StAXDepositParser.parseStAX(xmlFile);
         Deposit first = depositList.get(0);
 
         assertEquals("Example Bank", first.getName());
