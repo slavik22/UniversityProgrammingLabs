@@ -1,6 +1,7 @@
-package server;
+package task1.src.main.java.server;
 
-import object.MyObject;
+
+import task1.src.main.java.object.MyObject;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

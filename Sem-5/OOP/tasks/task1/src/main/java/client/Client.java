@@ -1,6 +1,7 @@
-package client;
+package task1.src.main.java.client;
 
-import object.MyObject;
+
+import task1.src.main.java.object.MyObject;
 
 import java.io.*;
 import java.net.Socket;

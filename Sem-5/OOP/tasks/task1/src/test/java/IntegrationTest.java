@@ -1,8 +1,10 @@
-import object.MyObject;
+package task1.src.test.java;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
+import task1.src.main.java.object.MyObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -78,7 +80,7 @@ public class IntegrationTest {
         assertEquals("Test Data", receivedData);
     }
 
-//    public static void main(String[] args) {
-//        JUnitCore.runClasses(IntegrationTest.class);
-//    }
+    public static void main(String[] args) {
+        JUnitCore.runClasses(IntegrationTest.class);
+    }
 }

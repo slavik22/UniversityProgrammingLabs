@@ -1,44 +1,66 @@
 package Tasks.Task_8;
 
-import java.time.LocalTime;
 
-public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        CustomReentrantLock customReentrantLock = new CustomReentrantLock();
-
-        Thread thread1 = new Thread(() -> {
-            try {
-                test(customReentrantLock);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+class CustomReentrantLock {
+    private boolean isLocked = false;
+    private Thread lockedBy = null;
+    private int lockCount = 0;
 
 
-        Thread thread2 = new Thread(() -> {
-            try {
-                test(customReentrantLock);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        thread1.start();
-        thread2.start();
-
-        thread1.join();
-        thread2.join();
+    public synchronized void lock() throws InterruptedException {
+        Thread currentThread = Thread.currentThread();
+        while (isLocked && lockedBy != currentThread) {
+            wait();
+        }
+        isLocked = true;
+        lockedBy = currentThread;
+        lockCount++;
     }
 
-    private static void test(CustomReentrantLock reentrantLock) throws InterruptedException {
-        reentrantLock.lock();
+    public synchronized void unlock() {
+        if (Thread.currentThread() == lockedBy) {
+            lockCount--;
 
-        System.out.println("Thread: " + Thread.currentThread().getName());
-        System.out.println("Time before sleep: " + LocalTime.now());
-        Thread.sleep(2000);
-
-        System.out.println("Time after sleep: " + LocalTime.now());
-
-        reentrantLock.unlock();
+            if (lockCount == 0) {
+                isLocked = false;
+                lockedBy = null;
+                notify();
+            }
+        }
     }
 }
+
+public class Main {
+    private static CustomReentrantLock lock = new CustomReentrantLock();
+
+    public static void main(String[] args) {
+        Thread t1 = new Thread(() -> {
+            try {
+                lock.lock();
+                System.out.println("Thread 1: First lock acquired.");
+                lock.lock();
+                System.out.println("Thread 1: Second lock acquired.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+                lock.unlock();
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            try {
+                lock.lock();
+                System.out.println("Thread 2: First lock acquired.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        });
+
+        t1.start();
+        t2.start();
+    }
+}
+

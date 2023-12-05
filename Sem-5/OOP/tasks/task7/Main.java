@@ -4,36 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Main {
-    private static final AtomicInteger waitTime = new AtomicInteger(500);
+import java.util.concurrent.BrokenBarrierException;
 
-    public static void main(String[] args) {
-        final int N = 3;
+class CyclicBarrier {
+    private int parties;
+    private int count = 0;
 
-        CustomCyclicBarrier barrier = new CustomCyclicBarrier(N);
-
-        List<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < N; i++) {
-            threads.add(new Thread(() -> {
-                try {
-                    testMethod(barrier);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }));
-        }
-
-        threads.forEach(Thread::start);
+    public CyclicBarrier(int parties) {
+        this.parties = parties;
     }
 
-    public static void testMethod(CustomCyclicBarrier barrier) throws InterruptedException {
-        long before = System.currentTimeMillis();
-        System.out.println("Before barrier: " + Thread.currentThread().getName());
-        Thread.sleep(waitTime.getAndAccumulate(1000, Integer::sum));
+    public synchronized void await() throws InterruptedException, BrokenBarrierException {
+        count++;
 
-        barrier.await();
+        while (count < parties) {
+            try {
+                wait();
+                break;
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Thread Interrupted");
+            }
+        }
+        notifyAll();
+        count = 0;
+    }
+}
 
-        long after = System.currentTimeMillis();
-        System.out.println("After barrier: " + Thread.currentThread().getName() + ", waited: " + (after - before));
+class BarrierThread extends Thread {
+    private CyclicBarrier barrier;
+
+    public BarrierThread(CyclicBarrier barrier) {
+        this.barrier = barrier;
+    }
+
+    @Override
+    public void run() {
+        try {
+            System.out.println(Thread.currentThread().getName() + " is waiting at the barrier.");
+            barrier.await();
+            System.out.println(Thread.currentThread().getName() + " has passed the barrier.");
+        } catch (InterruptedException | BrokenBarrierException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        final int numThreads = 3;
+        CyclicBarrier barrier = new CyclicBarrier(numThreads);
+
+        for (int i = 0; i < numThreads; i++) {
+            new BarrierThread(barrier).start();
+        }
     }
 }
