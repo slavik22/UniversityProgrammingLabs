@@ -3,47 +3,42 @@ package org.example.parsers;
 import org.example.models.Deposit;
 
 import javax.xml.stream.*;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
 import java.io.*;
 import java.util.*;
 
 public class StAXDepositParser {
 
-    public static List<Deposit> parseStAX(File xml) throws XMLStreamException, FileNotFoundException {
-
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-        XMLEventReader reader;
-
+    public static List<Deposit> parse(File file) {
         DepositHandler depositHandler = new DepositHandler();
-        reader = xmlInputFactory.createXMLEventReader(new FileInputStream(xml));
+        String currentElement = null;
 
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+            XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(fileInputStream);
 
-        while(reader.hasNext()) {
-            XMLEvent nextXMLEvent = reader.nextEvent();
-            if(nextXMLEvent.isStartElement()){
-                StartElement startElement = nextXMLEvent.asStartElement();
+            while (xmlStreamReader.hasNext()) {
+                int event = xmlStreamReader.next();
 
-                nextXMLEvent = reader.nextEvent();
-                String name = startElement.getName().getLocalPart();
-                if(nextXMLEvent.isCharacters()) {
-                    List<Attribute> attributesList = new ArrayList<>();
-                    Iterator<Attribute> iter = startElement.getAttributes();
-                    while(iter.hasNext()) {
-                        attributesList.add(iter.next());
+                switch (event) {
+                    case XMLStreamConstants.START_ELEMENT -> {
+                        currentElement = xmlStreamReader.getLocalName();
+                        depositHandler.startElement(null, null, currentElement, null);
                     }
-                    Map<String, String> attributeMap = new HashMap<>();
-
-                    for(Attribute attribute : attributesList){
-                        attributeMap.put(attribute.getName().getLocalPart(), attribute.getValue());
+                    case XMLStreamConstants.CHARACTERS -> {
+                        String value = xmlStreamReader.getText().trim();
+                        depositHandler.characters(value.toCharArray(), 0, value.length());
                     }
-                    depositHandler.setField(name, nextXMLEvent.asCharacters().getData(), attributeMap);
+                    case XMLStreamConstants.END_ELEMENT -> {
+                        currentElement = xmlStreamReader.getLocalName();
+                        depositHandler.endElement(null, null, currentElement);
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return depositHandler.getDepositList();
+
+        return depositHandler.getDeposits();
     }
 }
 

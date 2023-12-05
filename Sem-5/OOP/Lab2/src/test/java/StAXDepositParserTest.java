@@ -14,7 +14,8 @@ public class StAXDepositParserTest {
     @Test
     public void parseStAX() throws IOException, XMLStreamException, SAXException {
         File xmlFile = new File("src/main/resources/deposits.xml");
-        List<Deposit> depositList =  StAXDepositParser.parseStAX(xmlFile);
+        List<Deposit> depositList =  StAXDepositParser.parse(xmlFile);
+        System.out.println(depositList);
         Deposit first = depositList.get(0);
 
         assertEquals("Example Bank", first.getName());

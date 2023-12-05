@@ -15,7 +15,7 @@ public class DOMDepositParserTest {
     @Test
     public void parseDOM() throws IOException, XMLStreamException, ParserConfigurationException, SAXException {
         File xmlFile = new File("src/main/resources/deposits.xml");
-        List<Deposit> depositList =  DOMDepositParser.parseDOM(xmlFile);
+        List<Deposit> depositList =  DOMDepositParser.parse(xmlFile);
         Deposit first = depositList.get(0);
 
         assertEquals("Example Bank", first.getName());
