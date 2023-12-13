@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CRUD Operations</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h2>Groups</h2>
+
+    <!-- Group Table -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="groupTableBody"></tbody>
+    </table>
+
+    <!-- Group Form -->
+    <form id="groupForm">
+        <div class="form-group">
+            <label for="groupName">Name:</label>
+            <input type="text" class="form-control" id="groupName" required>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addGroup()">Add Group</button>
+    </form>
+</div>
+
+<div class="container mt-4">
+    <h2>Students</h2>
+
+    <!-- Student Table -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Group</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="studentTableBody"></tbody>
+    </table>
+
+    <!-- Student Form -->
+    <form id="studentForm">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" class="form-control" id="firstName" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" class="form-control" id="lastName" required>
+        </div>
+        <div class="form-group">
+            <label for="group">Group:</label>
+            <input type="text" class="form-control" id="group" required>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addStudent()">Add Student</button>
+    </form>
+</div>
+
+<script>
+    // Function to load groups and students on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        loadGroups();
+        loadStudents();
+    });
+
+    // Function to load groups from the backend
+    function loadGroups() {
+        fetch('http://localhost:8080/groups')
+            .then(response => response.json())
+            .then(groups => {
+                var groupTableBody = document.getElementById('groupTableBody');
+                groupTableBody.innerHTML = '';
+                groups.forEach(group => {
+                    groupTableBody.innerHTML += `
+                        <tr>
+                            <td>${group.id}</td>
+                            <td>${group.name}</td>
+                            <td><button class='btn btn-danger' onclick='deleteGroup(${group.id})'>Delete</button></td>
+                        </tr>
+                    `;
+                });
+            });
+    }
+
+    // Function to load students from the backend
+    function loadStudents() {
+        fetch('http://localhost:8080/students')
+            .then(response => response.json())
+            .then(students => {
+                var studentTableBody = document.getElementById('studentTableBody');
+                studentTableBody.innerHTML = '';
+                students.forEach(student => {
+                    studentTableBody.innerHTML += `
+                        <tr>
+                            <td>${student.id}</td>
+                            <td>${student.first_name}</td>
+                            <td>${student.last_name}</td>
+                            <td>${student.group_id}</td>
+                            <td><button class='btn btn-danger' onclick='deleteStudent(${student.id})'>Delete</button></td>
+                        </tr>
+                    `;
+                });
+            });
+    }
+
+    // Function to handle group form submission
+    function addGroup() {
+        var groupName = document.getElementById('groupName').value;
+        fetch('http://localhost:8080/groups', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(groupName)
+        })
+        .then(response => {
+            if (response.ok) {
+                loadGroups();
+                document.getElementById('groupName').value = '';
+            }
+        });
+    }
+
+    // Function to handle student form submission
+    function addStudent() {
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+        var groupId = document.getElementById('group').value;
+        fetch('http://localhost:8080/students', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ first_name: firstName, last_name: lastName, group_id: groupId })
+        })
+        .then(response => {
+            if (response.ok) {
+                loadStudents();
+                document.getElementById('firstName').value = '';
+                document.getElementById('lastName').value = '';
+                document.getElementById('group').value = '';
+            }
+        });
+    }
+
+    // Function to handle group deletion
+    function deleteGroup(groupId) {
+        fetch(`http://localhost:8080/groups/${groupId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                loadGroups();
+            }
+        });
+    }
+
+    // Function to handle student deletion
+    function deleteStudent(studentId) {
+        fetch(`http://localhost:8080/students/${studentId}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                loadStudents();
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
