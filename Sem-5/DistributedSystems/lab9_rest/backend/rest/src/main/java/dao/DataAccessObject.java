@@ -1,0 +1,218 @@
+package dao;
+
+import model.Group;
+import model.Student;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class DataAccessObject {
+    private static final String URL = "jdbc:mysql://localhost:3306/students";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "password";
+
+    private final Connection connection;
+
+    public DataAccessObject() {
+        this.connection = connectToDatabase();
+    }
+
+    public void closeConnection() {
+        try {
+            this.connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Connection connectToDatabase() {
+        try {
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createNewGroup(String groupName) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO `group` (name) VALUES (?)");
+            ps.setString(1, groupName);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createNewStudent(Student student) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO student (first_name, last_name, group_id) VALUES (?, ?, ?)");
+            ps.setString(1, student.first_name);
+            ps.setString(2, student.last_name);
+            ps.setInt(3, student.group_id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteGroup(int id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM `group` WHERE id = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteStudent(int id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM student WHERE id = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateGroup(Group group) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE `group` SET name = ? WHERE id = ?");
+            ps.setString(1, group.name);
+            ps.setInt(2, group.id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateStudent(Student student) {
+
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE student SET first_name = ?, last_name = ?, group_id = ? WHERE id = ?");
+            ps.setString(1, student.first_name);
+            ps.setString(2, student.last_name);
+            ps.setInt(3, student.group_id);
+            ps.setInt(4, student.id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<Group> findGroupById(int id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `group` WHERE id = ?");
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next())
+                return Optional.of(new Group(resultSet.getString("name"), resultSet.getInt("id")));
+            else
+                return Optional.empty();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<Student> findStudentById(int id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM student WHERE id = ?");
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next())
+                return Optional.of(new Student(
+                        resultSet.getInt("id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getInt("group_id"))
+                );
+            else
+                return Optional.empty();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Group> findAllGroups() {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `group`");
+            ResultSet resultSet = ps.executeQuery();
+
+            List<Group> groups = new ArrayList<>();
+            while (resultSet.next()) {
+                groups.add(new Group(resultSet.getString("name"), resultSet.getInt("id")));
+            }
+            return groups;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Student> findAllStudents() {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `student`");
+            ResultSet resultSet = ps.executeQuery();
+
+            List<Student> students = new ArrayList<>();
+
+            while (resultSet.next()) {
+                students.add(new Student(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getInt("group_id") ));
+            }
+
+            return students;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Student> findAllStudentsWithGroupId(int groupId) {
+        try {
+            Optional<Group> groupOptional = findGroupById(groupId);
+            if (groupOptional.isEmpty())
+                return new ArrayList<>();
+
+            Group group = groupOptional.get();
+
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM student WHERE group_id = ?");
+            ps.setInt(1, groupId);
+            ResultSet resultSet = ps.executeQuery();
+
+            List<Student> student = new ArrayList<>();
+            while (resultSet.next()) {
+                student.add(new Student(
+                        resultSet.getInt("id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getInt("group_id"))
+                );
+            }
+            return student;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int countStudentsInGroup(int groupId) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM students.student WHERE group_id = ?");
+            ps.setInt(1, groupId);
+            ResultSet resultSet = ps.executeQuery();
+
+            resultSet.next();
+            int count = resultSet.getInt(1);
+            resultSet.close();
+            return count;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
