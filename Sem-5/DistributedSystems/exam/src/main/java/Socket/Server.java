@@ -69,13 +69,13 @@ public class Server {
     public static void addNewConcert(String[] queryParts) {
         try {
             System.out.println("SERVER: addNewConcert");
-            if (paramsAreInvalid(5, queryParts.length)) return;
+            if (paramsAreInvalid(6, queryParts.length)) return;
             String concertName = queryParts[1];
             String concertGenre = queryParts[2];
             String concertDate = queryParts[3];
             String concertVenue = queryParts[4];
-            int seatNumber = Integer.parseInt(queryParts[4]);
-            dao.addEvent (new Event(concertName, concertGenre, concertDate, concertVenue, seatNumber));
+            int seatNumber = Integer.parseInt(queryParts[5]);
+            dao.addEvent(new Event(concertName, concertGenre, concertDate, concertVenue, seatNumber));
             sendResponse(ServerResponse.SUCCESS.getStatus(), "Concert added successfully");
         } catch (Exception e) {
             sendResponse(ServerResponse.INVALID_PARAMS.getStatus());

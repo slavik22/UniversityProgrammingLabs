@@ -1,6 +1,8 @@
 package Models;
 
-public class Seat {
+import java.io.Serializable;
+
+public class Seat implements Serializable {
     private final int seatNumber;
     private boolean isOccupied;
 
@@ -13,5 +15,13 @@ public class Seat {
     }
     public boolean isOccupied() {
         return isOccupied;
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "seatNumber=" + seatNumber +
+                ", isOccupied=" + isOccupied +
+                '}';
     }
 }

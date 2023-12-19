@@ -6,7 +6,7 @@ import Models.Event;
 import Models.Seat;
 
 public class ConcertManager {
-    private final List<Event> events;
+    private List<Event> events;
 
     public ConcertManager() {
         this.events = new ArrayList<>();

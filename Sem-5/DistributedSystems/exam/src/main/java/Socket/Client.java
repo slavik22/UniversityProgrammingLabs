@@ -58,9 +58,9 @@ public class Client {
         out.println(generateLineWithSeparator("5"));
     }
     public static void getAllBookedSeats() {
-        System.out.println("Enter group ID: ");
-        String groupId = scanner.nextLine();
-        out.println(generateLineWithSeparator("6", groupId));
+        System.out.println("Enter concert name: ");
+        String concertName = scanner.nextLine();
+        out.println(generateLineWithSeparator("6", concertName));
     }
 
     public static void showMenu() {

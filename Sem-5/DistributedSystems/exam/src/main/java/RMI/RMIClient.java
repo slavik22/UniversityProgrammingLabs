@@ -6,7 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
 
-public class Client {
+public class RMIClient {
     public static void main(String[] args) {
         try {
             Registry registry = LocateRegistry.getRegistry();
@@ -35,14 +35,19 @@ public class Client {
                     switch (operation) {
                         case 1 -> {
                             System.out.println("Enter concert name: ");
+                            scanner = new Scanner(System.in);
                             String concertName = scanner.nextLine();
                             System.out.println("Enter concert genre: ");
+                            scanner = new Scanner(System.in);
                             String concertGenre = scanner.nextLine();
                             System.out.println("Enter concert date: ");
+                            scanner = new Scanner(System.in);
                             String concertDate = scanner.nextLine();
                             System.out.println("Enter concert venue: ");
+                            scanner = new Scanner(System.in);
                             String concertVenue = scanner.nextLine();
                             System.out.println("Enter concert seat number: ");
+                            scanner = new Scanner(System.in);
                             String seatNumber = scanner.nextLine();
                             rmiCommands.addNewConcert(new Event(concertName, concertGenre, concertDate, concertVenue, Integer.parseInt(seatNumber)));
                             System.out.println("Operation completed successfully");
@@ -69,20 +74,23 @@ public class Client {
                         }
                         case 4 -> {
                             System.out.println("Enter concert name: ");
+                            scanner = new Scanner(System.in);
                             String concertName = scanner.nextLine();
                             System.out.println("Enter concert seat number: ");
+                            scanner = new Scanner(System.in);
                             int seatNumber = Integer.parseInt(scanner.nextLine());
                             rmiCommands.bookSeat(concertName, seatNumber);
                             System.out.println("Operation completed successfully");
                         }
                         case 5 -> {
-                            rmiCommands.getConcerts();
+                            System.out.println(rmiCommands.getConcerts());
                             System.out.println("Operation completed successfully");
                         }
                         case 6 -> {
                             System.out.println("Enter concert name: ");
+                            scanner = new Scanner(System.in);
                             String concertName = scanner.nextLine();
-                            rmiCommands.getSeats(concertName);
+                            System.out.println(rmiCommands.getSeats(concertName));
                             System.out.println("Operation completed successfully");
                         }
                         case 7 -> System.out.println("Program stopped");

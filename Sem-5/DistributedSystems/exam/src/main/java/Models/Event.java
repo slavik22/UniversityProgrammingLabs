@@ -1,12 +1,25 @@
 package Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Event {
+public class Event implements Serializable {
     private String name;
     private String genre;
     private String date;
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "name='" + name + '\'' +
+                ", genre='" + genre + '\'' +
+                ", date='" + date + '\'' +
+                ", venue='" + venue + '\'' +
+                ", seatNumber=" + seatNumber +
+                '}';
+    }
+
     private String venue;
     private final List<Seat> seats;
 
@@ -19,6 +32,7 @@ public class Event {
         this.genre = genre;
         this.date = date;
         this.venue = venue;
+        this.seatNumber = seatNumber;
         seats = new ArrayList<>(seatNumber);
     }
 
