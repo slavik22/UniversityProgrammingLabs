@@ -1,7 +1,7 @@
 package Models;
 
 public class Seat {
-    private int seatNumber;
+    private final int seatNumber;
     private boolean isOccupied;
 
     public Seat(int seatNumber) {

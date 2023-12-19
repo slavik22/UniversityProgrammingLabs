@@ -1,7 +1,6 @@
 package DAO;
 
 
-import java.sql.*;
 import java.util.*;
 import Models.Event;
 import Models.Seat;

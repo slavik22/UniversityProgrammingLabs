@@ -50,7 +50,6 @@ public class Server {
             e.printStackTrace();
         }
     }
-
     public static void getAllConcerts(String[] queryParts) {
         try {
             System.out.println("SERVER: getAllConcerts");

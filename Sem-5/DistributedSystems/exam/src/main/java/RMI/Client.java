@@ -12,7 +12,6 @@ public class Client {
             Registry registry = LocateRegistry.getRegistry();
             RMICommandsInterface rmiCommands = (RMICommandsInterface) registry
                     .lookup("Dao");
-
             String commands =
                     """
                             1. Create new concert

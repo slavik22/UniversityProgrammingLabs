@@ -57,7 +57,6 @@ public class Client {
     public static void getAllConcerts() {
         out.println(generateLineWithSeparator("5"));
     }
-
     public static void getAllBookedSeats() {
         System.out.println("Enter group ID: ");
         String groupId = scanner.nextLine();

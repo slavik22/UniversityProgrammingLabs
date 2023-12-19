@@ -10,7 +10,6 @@ public class RMIServer {
     public static void main(String[] args) {
         try {
             RMICommandsInterface remote = new RMICommands();
-
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.bind("Dao", remote);
 

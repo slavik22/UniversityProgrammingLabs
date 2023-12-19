@@ -8,7 +8,7 @@ public class Event {
     private String genre;
     private String date;
     private String venue;
-    private List<Seat> seats;
+    private final List<Seat> seats;
 
     private int seatNumber;
 
